@@ -1,0 +1,130 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+<h3 style="text-align: center">
+    Your Comic
+</h3>
+
+<h4 id="title"></h4>
+
+
+<img style="border: 2px solid black" id="comic" width="320" height="235" src="">             
+
+<p id="caption"></p>
+
+<button id="send">Send</button>
+
+<script>
+$(document).ready(function() {
+    loadComic();
+});
+
+function dateAndTime() {
+    var currentdate = new Date();
+
+    var dateTime = (currentdate.getMonth()+1) + "/"+ currentdate.getDate()
+    + "/" + currentdate.getFullYear() + " @ " 
+    + ((currentdate.getHours() > 12) ? (currentdate.getHours() - 12) : currentdate.getHours()) + ":" 
+    + ((currentdate.getMinutes() < 10) ? ("0" + currentdate.getMinutes()) :  currentdate.getMinutes()) + ":" + currentdate.getSeconds();
+    
+    return dateTime;
+}
+
+function loadComic() {
+    var currentComic = retrieve("currentComic");
+    var comic = currentComic.image;
+    var image = document.getElementById("comic");
+    image.src = comic;
+    
+    var data = elementAPI.userData();
+    if (currentComic.title) {
+      document.getElementById("title").innerHTML = currentComic.title;
+    }
+    
+    if (currentComic.caption) {
+      document.getElementById("caption").innerHTML = currentComic.caption;
+    }
+    
+}
+
+function retrieve(object) {
+    var data = elementAPI.userData();
+    var parsedObject = JSON.parse(data.getValue(object));
+    return parsedObject;
+}
+
+function saveCurrentComic() {
+    var stringedObject = JSON.stringify(currentComic);
+    elementAPI.userData().setValue("currentComic", stringedObject);
+}
+
+$("#send").click(function sendIt() {
+    currentComic = retrieve("currentComic");
+    var timestamp = Date.now();
+    currentComic.timestamp = timestamp;
+    currentComic.dateAndTime = dateAndTime();
+    
+    //update user DB
+    elementAPI.userData().setValue("unseen", "1");
+        
+    myComics = syncArray();
+    myComics.unshift(currentComic);
+        stringedArray = JSON.stringify(myComics);
+        elementAPI.userData().setValue("myComics", stringedArray);
+        elementAPI.partnerData().setValue("myComics", stringedArray);
+       
+    //blow out currentComic
+    elementAPI.userData().setValue("currentComic", "");
+     
+    //send NOTIFICATION to partner
+    elementAPI.session().dowithPartner();
+    alert("Your comic has been sent to " + elementAPI.partner().name() + "!");
+});
+
+function masterLength() {
+    var partnerArr = JSON.parse(elementAPI.partnerData().getValue("myComics"));
+    var userArr = [];
+    if (elementAPI.userData().getValue("myComics")) {
+      userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
+    }
+    if (userArr.length >= partnerArr.length) {
+      return userArr.length;
+    } else {
+      return partnerArr.length;
+    }
+}
+
+function syncArray() { 
+    var userArr;
+    if (elementAPI.userData().getValue("myComics") !== undefined && elementAPI.userData().getValue("myComics") !== null) {
+      userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
+    } else {
+      userArr = [];
+    }
+    //alert("userArr: "+ JSON.stringify(userArr));
+    
+    if (partnerArrayExists()) {
+      var partnerArr = JSON.parse(elementAPI.partnerData().getValue("myComics"));
+      syncedArray = [];
+      //alert("master length: " + masterLength());
+        for (i = 0; i < masterLength(); i++) {
+           if (userArr[i] === undefined) {
+             syncedArray[i] = partnerArr[i];
+           } else if (partnerArr[i] === undefined) {
+               syncedArray[i] = userArray[i];
+           } else if (userArr[i].timestamp >= partnerArr[i].timestamp) {
+               syncedArray[i] = userArr[i];
+           } else {
+               syncedArray[i] = partnerArr[i];
+           }
+        }
+        return syncedArray;
+    } else {
+        return userArr;
+    }
+    
+}
+
+function partnerArrayExists() {
+    return (elementAPI.partnerData().getValue("myComics") !== undefined && elementAPI.partnerData().getValue("myComics") !== null);
+}
+</script>

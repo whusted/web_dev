@@ -1,0 +1,63 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+<h3 style="text-align: center">
+    Edit Comic
+</h3>
+
+
+<input type="text" id="title" placeholder="Tap to add title..."></input>
+
+
+<img style="border: 2px solid black" id="comic" width="320" height="235" src="">
+
+
+<input type="text" id="caption" placeholder="Tap to add caption..."></input>
+
+
+<script>
+
+$(document).ready(function () {
+    //load image
+    var currentComic = retrieveObject();
+    var comic = currentComic.image;
+    var image = document.getElementById("comic");
+    image.src = comic;
+});
+
+function retrieveObject() {
+    var data = elementAPI.userData();
+    var currentComic = JSON.parse(data.getValue("currentComic"));
+    
+    return currentComic;
+}
+
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+$('input').keyup(function(event) {
+    delay(function(){
+          var id = event.target.id;
+    var currentComic = retrieveObject();
+    var input;
+    if (id.localeCompare('title') === 0) {
+        input = $("#title").val();
+        currentComic.title = input;
+    } else if (id.localeCompare('caption') === 0) {
+        input = $("#caption").val();
+        currentComic.caption = ("'" + input + "'");
+    }
+    saveCurrentComic(currentComic);
+    }, 750 );   
+});
+
+function saveCurrentComic(currentComic) {
+    var stringedObject = JSON.stringify(currentComic);
+    elementAPI.userData().setValue("currentComic", stringedObject);
+}
+  
+</script>

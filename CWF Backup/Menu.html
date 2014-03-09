@@ -1,0 +1,68 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://fancyapps.com/fancybox/source/jquery.fancybox.js"></script>
+
+</style>
+<link rel="stylesheet" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css" type="text/css" media="screen" />
+
+<style>
+.menu_buttons {
+    font-size: 30px !important;
+}
+
+input[type="radio"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+    -ms-appearance: checkbox;     /* not currently supported */
+    -o-appearance: checkbox;      /* not currently supported */
+}
+
+</style>
+
+<div class="title">
+    <h1 style="text-align: center">Menu</h1>
+</div>
+<hr>
+<div class="menu_buttons">
+  <label><input type="radio" name="toggle" id="create" value="Milk"> Create Comic</label>
+  <br>
+  <br>
+  <label><input type="radio" name="toggle" id="view" value="Butter"> View Comics</label>
+</div>
+<hr>
+<a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
+    <button id="how_to_create">How to Create</button>
+    <div id="TheFancybox"></div>
+</a> 
+
+<script>
+
+$(document).ready(function() { 
+    elementAPI.metrics()['menu'].updateValueForMetric(0);
+    setTimeout(function() { newComics() },500);
+});
+
+function newComics() {
+    if (elementAPI.partnerData().getValue("unseen") === "1") {
+      alert("You have a new comic to view!");
+    }
+}
+
+$("#how_to_create").click(function() {
+  $("#TheFancybox").html("<p>Here's where Stephanie's example will go.</p>");
+  $(".fancyTrigger").fancybox();
+  $(".fancyTrigger").trigger('click');  
+});
+
+$("input").click(function fromMenu(event) {
+        var id = event.target.id;
+
+        if (id.localeCompare('view') === 0) {
+          elementAPI.metrics()['menu'].updateValueForMetric(2);
+         //alert(JSON.stringify(elementAPI.metrics()));
+        } else if (id.localeCompare('create') === 0) {
+          elementAPI.metrics()['menu'].updateValueForMetric(1);
+          //alert(JSON.stringify(elementAPI.metrics()));
+        } 
+    });
+      
+</script>
