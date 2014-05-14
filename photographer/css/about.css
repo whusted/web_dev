@@ -26,12 +26,13 @@ body {
 #bio_pic {
 	position: absolute;
 	top: 0%;
-	left: 25%;
+	left: 24%;
+	box-shadow: 10px 10px 5px #4b5458;
 }
 
 #bio_text {
 	position: absolute;
-	top: 27%;
+	top: 400px;
 	left: 20%;
     font-family: Helvetica;
     font-size: 20px;
@@ -62,7 +63,6 @@ body {
 }
 
 nav ul {
-	box-shadow: 10px 10px 5px #888888;
 	float: left;
 	background: #efefef; 
 	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
