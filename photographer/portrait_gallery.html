@@ -4,26 +4,27 @@
 
     <head>
 	    <!--jQuery Library-->
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-
-		<script type="text/javascript" src="yoxview/yoxview-init.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 		<!-- Stylesheets-->
-		<link rel="stylesheet" href="css/home.css" type="text/css" media="screen" />
-		<link rel="stylesheet" href="yoxview/yoxview.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="css/gallery.css" type="text/css" media="screen" />
 
-
-		<div class="yoxview">
-            <a href="img/gallery/portrait1.jpg"><img src="" alt="First" title="First image" /></a>
-        </div>
+		<script src="galleria/galleria-1.3.5.min.js"></script>
 
 
         <script type="text/javascript">
 			$(document).ready(function() {
-				console.log("yeah");
-                $("#thumbnails").yoxview({
-                    backgroundColor: 'Blue',
-                    playDelay: 5000
-                });
+               Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+               Galleria.run('.galleria');
             });
         </script>
+
+        <body>
+        	<div class="galleria">
+        		<img src="img/gallery/event1.jpg">
+        		<img src="img/gallery/family1.jpg">
+        		<img src="img/gallery/travel1.jpg">
+        		<img src="img/gallery/travel2.jpg">
+
+
+        </body>
