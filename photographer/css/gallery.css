@@ -1,9 +1,13 @@
 * {
-  margin: 0;
+    margin: 0;
+}
+html {
+	height: 100%;
 }
 
 body {
 	background: url(../img/gray_background.jpg) no-repeat;
+	height: 100%;
 }
 
 #bio {
@@ -24,14 +28,13 @@ body {
 	padding-top: 1px;
 }
 
-.galleria { 
+.galleria {
 	width: 100%;
-	min-height: 800px;
+	height: 96%;
 	background: #000
  }
 
 nav ul {
-	box-shadow: 10px 10px 5px #888888;
 	float: left;
 	background: #efefef; 
 	background: linear-gradient(top, #efefef 0%, #bbbbbb 100%);  
@@ -39,10 +42,12 @@ nav ul {
 	background: -webkit-linear-gradient(top, #efefef 0%,#bbbbbb 100%); 
 	box-shadow: 0px 0px 9px rgba(0,0,0,0.15);
 	padding: 0 20px;
+	padding-top: 0px;
 	border-radius: 10px;  
 	list-style: none;
-	position: relative;
+	position: absolute;
 	display: inline-table;
+	z-index: 4;
 }
 	nav ul:after {
 		content: ""; clear: both; display: block;
