@@ -19,7 +19,6 @@ body {
 #contact_info {
     font-family: Helvetica;
     font-size: 20px;
-
 }
 
 #social {
@@ -33,6 +32,34 @@ body {
 	height: 96%;
 	background: #000
  }
+
+.galleria-stage {
+    display: none; 
+}
+.galleria-stage, .galleria-thumbnails-container {
+    height: 200px !important;
+    top: 20px !important;
+    bottom: 100px !important;
+    left: 0px !important;
+    right: 0px !important;
+}
+
+body .galleria-bar {
+	height: 100px; 
+}
+
+body .galleria-thumbnails .galleria-image {
+	width: 200px;
+	height: 200px;
+}
+
+.galleria-thumbnails-container {
+	z-index: 2 !important; 
+}
+
+.galleria-thumb-nav-left, .galleria-thumb-nav-right {
+	top: 75px;
+}
 
 nav ul {
 	float: left;

@@ -6,6 +6,10 @@
 	    <!--jQuery Library-->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
+		<!--fancyBox -->
+        <link rel="stylesheet" href="fancyBox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+        <script type="text/javascript" src="fancyBox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
 		<!-- Stylesheets-->
 		<link rel="stylesheet" href="css/gallery.css" type="text/css" media="screen" />
 
@@ -14,8 +18,21 @@
 
         <script type="text/javascript">
 			$(document).ready(function() {
-               Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
-               Galleria.run('.galleria');
+                Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
+                Galleria.run('.galleria');
+                // Creates a lightbox pop up --> not working
+			    // Galleria.ready(function() {
+       //              var gallery = this;
+       //              $('.lightbox').click(function(e) {
+       //                  // e.preventDefault();
+       //                  gallery.openLightbox();
+       //              });
+       //              this.bind('thumbnail', function(e) {
+       //                  $(e.thumbTarget).parent().unbind('click').click(function() {
+       //                  gallery.openLightbox();
+       //                  });
+       //              });
+       //          });
             });
         </script>
 
@@ -46,5 +63,12 @@
         		<img src="img/gallery/travel1.jpg">
         		<img src="img/gallery/travel2.jpg">
         	</div>
+
+        	<!--Contact content-->
+	        <div style="display:none">
+	            <p id="contact_info" method="post" action="">
+	                Email: <a href="mailto:jdlaskeproductions@gmail.com?Subject=I%20Need%20A%20Photographer!"> jdlaskeproductions@gmail.com</a>
+	            </p>
+            </div>
 
         </body>
