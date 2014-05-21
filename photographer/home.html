@@ -8,9 +8,6 @@
 
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
-		
-		<!-- <link rel="stylesheet" href="css/home.css" type="text/css" media="screen" /> -->
-		
 		<!--jQuery Library-->
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
@@ -25,9 +22,18 @@
 
 		<script type="text/javascript">
 			$(document).ready(function() {
+				// Galleria intialization
                 Galleria.loadTheme('galleria/themes/classic/galleria.classic.min.js');
                 Galleria.run('.galleria',{
                 	autoplay: 5000
+                });
+                
+                // Fancybox intialization
+                $("#contact").fancybox({
+                    transition: "fade",
+                    maxWidth: 600,
+                    autoSize: true,
+                    scrolling: "yes"
                 });
             });
         </script>
