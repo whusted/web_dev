@@ -39,7 +39,7 @@ body {
 .galleria-stage, .galleria-thumbnails-container {
     height: 200px !important;
     top: 20px !important;
-    bottom: 100px !important;
+    bottom: 0px !important;
     left: 0px !important;
     right: 0px !important;
 }
@@ -51,14 +51,16 @@ body .galleria-bar {
 body .galleria-thumbnails .galleria-image {
 	width: 200px;
 	height: 200px;
+	left: 0px !important;
 }
 
-.galleria-thumbnails-container {
-	z-index: 2 !important; 
+body .galleria-thumbnails-container {
+	z-index: 2 !important;
+	/*width: 800px;*/
 }
 
 .galleria-thumb-nav-left, .galleria-thumb-nav-right {
-	top: 75px;
+	top: 70px;
 }
 
 nav ul {
