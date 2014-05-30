@@ -13,7 +13,7 @@
 		<!-- Stylesheets-->
 		<link rel="stylesheet" href="css/gallery.css" type="text/css" media="screen" />
 
-		<script src="galleria/galleria-1.3.5.min.js"></script>
+		<script src="galleria/galleria-1.3.5.js"></script>
 
 		<link rel="stylesheet" href="galleria/themes/classic/galleria.classic.css">
         <script src="galleria/themes/classic/galleria.classic.min.js"></script>
@@ -22,26 +22,28 @@
         <script type="text/javascript">
 			$(document).ready(function() {
                 // Creates a lightbox pop up --> not working
-			    // Galleria.ready(function() {
-       //              var gallery = this;
-       //              $('.lightbox').click(function(e) {
-       //              	console.log("Hi");
-       //                  e.preventDefault();
-       //                  gallery.openLightbox();
-       //              });
-       //              this.bind('thumbnail', function(e) {
-       //                  $(e.thumbTarget).parent().unbind('click').click(function() {
-       //                      e.preventDefault();
-       //                      gallery.openLightbox();
-       //                  });
-       //              });
-       //          });
+			    Galleria.ready(function() {
+                    var gallery = this;
+                    $('.lightbox').click(function(e) {
+                        e.preventDefault();
+                        gallery.openLightbox();
+                    });
+                    gallery.bind('thumbnail', function(e) {
+                        $(e.thumbTarget).parent().unbind('click').click(function() {
+                            e.preventDefault();
+                            gallery.openLightbox();
+                            gallery.closeLightbox();
+                        });
+                    });
+          });
+
 			    Galleria.configure({
-                    lightbox: true
+                    lightbox: true,
+                    thumbEventType: 'mouseover'
                 });
 
 			    Galleria.run('.galleria',{
-                	//thumbCrop: true
+                	thumbnail: "true"
                 });
 			    // Fancybox intialization
                 $("#contact").fancybox({

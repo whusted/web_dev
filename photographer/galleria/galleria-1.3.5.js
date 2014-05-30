@@ -2148,6 +2148,7 @@ Galleria = function() {
         init : function() {
 
             if ( lightbox.initialized ) {
+                console.log("true");
                 return;
             }
             lightbox.initialized = true;
@@ -2213,6 +2214,7 @@ Galleria = function() {
 
             // initiate the image
             lightbox.image = new Galleria.Picture();
+            console.log(lightbox.image);
 
             // append the elements
             $.each({
@@ -2236,7 +2238,6 @@ Galleria = function() {
             $( DOM().body ).append( el.overlay, el.box );
 
             // add the prev/next nav and bind some controls
-
             hover( $( el.close ).on( 'click:fast', lightbox.hide ).html('&#215;') );
 
             $.each( ['Prev','Next'], function(i, dir) {
@@ -2341,6 +2342,7 @@ Galleria = function() {
         },
 
         show: function(index) {
+            console.log(self.getIndex());
 
             lightbox.active = index = typeof index === 'number' ? index : self.getIndex() || 0;
 
@@ -3255,7 +3257,6 @@ Galleria.prototype = {
             },
 
             onThumbEvent = function( e ) {
-
                 // pause if option is set
                 if ( o.pauseOnInteraction ) {
                     self.pause();
@@ -3266,7 +3267,6 @@ Galleria.prototype = {
                 if ( self.getIndex() !== index ) {
                     self.show( index );
                 }
-
                 e.preventDefault();
             },
 
@@ -6036,7 +6036,6 @@ Galleria.requires = function( version, msg ) {
 */
 
 Galleria.Picture = function( id ) {
-
     // save the id
     this.id = id || null;
 
