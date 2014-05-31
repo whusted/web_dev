@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 body {
 	background: url(../img/gray_background.jpg) no-repeat;
 }
