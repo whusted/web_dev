@@ -10,9 +10,6 @@
 
 		<!-- Bootstrap core CSS -->
         <link href="css/bootstrap_home.css" rel="stylesheet">
-
-        <!-- Custom CSS for the 'Thumbnail Gallery' Template -->
-        <link href="css/thumbnail-gallery.css" rel="stylesheet">
     
         <!--jQuery Library-->
         <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -26,13 +23,15 @@
 		<link rel="stylesheet" href="galleria/themes/classic/galleria.classic.css">
         <script src="galleria/themes/classic/galleria.classic.min.js"></script>
 
+        <!-- JavaScript -->
+        <script src="js/bootstrap.js"></script> -->
+
 		<script type="text/javascript">
 			$(document).ready(function() {
 				// Galleria intialization
                 Galleria.run('.galleria',{
                 	autoplay: 5000
                 });
-                
                 // Fancybox intialization
                 $("#contact").fancybox({
                     transition: "fade",
@@ -40,11 +39,9 @@
                     autoSize: true,
                     scrolling: "yes"
                 });
+               
             });
         </script>
-        <!-- JavaScript -->
-        <script src="js/jquery-1.10.2.js"></script>
-        <script src="js/bootstrap.js"></script>
 
         <body>
         	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
