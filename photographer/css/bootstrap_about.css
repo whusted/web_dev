@@ -5063,13 +5063,13 @@ a.list-group-item-danger.active:focus {
 }
 #pattern {
   display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 70%;
-    height: 100%;
-    position: relative;
-    top: -71px;
-    left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  height: 100%;
+  position: relative;
+  top: -71px;
+  left: 0;
 }
 
 #bio_pic {
@@ -5080,31 +5080,31 @@ a.list-group-item-danger.active:focus {
 }
 
 #bio_text {
-    position: absolute;
-    top: 400px;
-    left: 20%;
-    font-family: Helvetica;
-    font-size: 20px;
-    z-index: 3;
-    width: 60%;
+  position: absolute;
+  top: 400px;
+  left: 20%;
+  font-family: Helvetica;
+  font-size: 20px;
+  z-index: 3;
+  width: 60%;
 }
 
 #contact_info {
-    font-family: Helvetica;
-    font-size: 20px;
+  font-family: Helvetica;
+  font-size: 20px;
 
 }
 .second_layer {
-    position: relative;
-    left: 0;
-    top: 60px;
+  position: relative;
+  left: 0;
+  top: 60px;
 }
 #social {
-    float: right !important;
-    top: 0px !important;
-    left: 1230px;
-    position: absolute;
-    z-index: 9999;
+  float: right !important;
+  top: 0px !important;
+  left: 1230px;
+  position: absolute;
+  z-index: 9999;
 }
 .well {
   min-height: 20px;
