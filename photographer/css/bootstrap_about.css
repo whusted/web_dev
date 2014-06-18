@@ -11,14 +11,14 @@ html {
       -ms-text-size-adjust: 100%;
 }
 body {
-  background: url('../img/gallery/family1.jpg') no-repeat;
+  background: url('../img/star_pattern.jpg') no-repeat;
   background-size: 100%;
   background-attachment: fixed;
   width: 100%;
-  position: absolute;
   top: 0;
   left: 0;
   margin: 0;
+  padding-top: 50px;
 }
 article,
 aside,
@@ -5061,27 +5061,16 @@ a.list-group-item-danger.active:focus {
 .panel-danger > .panel-footer + .panel-collapse .panel-body {
   border-bottom-color: #ebccd1;
 }
-#pattern {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 70%;
-  height: 100%;
-  position: relative;
-  top: -71px;
-  left: 0;
-}
 
 #bio_pic {
-  position: absolute;
-  top: 0%;
+  position: relative;
   left: 24%;
   box-shadow: 10px 10px 5px #4b5458;
 }
 
 #bio_text {
-  position: absolute;
-  top: 400px;
+  position: relative;
+  top: 10px;
   left: 20%;
   font-family: Helvetica;
   font-size: 20px;
@@ -5095,9 +5084,8 @@ a.list-group-item-danger.active:focus {
 
 }
 .second_layer {
-  position: relative;
   left: 0;
-  top: 60px;
+  padding-top: 10px;
 }
 #social {
   float: right !important;
