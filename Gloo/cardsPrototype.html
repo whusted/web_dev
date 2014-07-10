@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <h1>Cards</h1>
+    <body>
+
+
+      <canvas id="canvas" width="1311" height="772"></canvas>
+
+      <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script type="text/javascript" src="card.js"></script>
+      <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+      
+        roundRect(ctx, 10, 20, 180, 220, 10, "white");
+        roundRect(ctx, 10, 15, 180, 220, 10, "white");
+        roundRect(ctx, 10, 10, 180, 220, 10, "white");
+        //roundRect(ctx, 15, 20, 160, 180, 10, "white");
+
+      </script>
+    </body>
+  </head>
+</html>
