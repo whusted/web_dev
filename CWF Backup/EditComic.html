@@ -32,16 +32,16 @@ function retrieveObject() {
 }
 
 var delay = (function(){
-  var timer = 0;
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
+    var timer = 0;
+    return function(callback, ms) {
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+    };
 })();
 
 $('input').keyup(function(event) {
     delay(function(){
-          var id = event.target.id;
+    var id = event.target.id;
     var currentComic = retrieveObject();
     var input;
     if (id.localeCompare('title') === 0) {

@@ -37,11 +37,11 @@ function loadComic() {
     
     var data = elementAPI.userData();
     if (currentComic.title) {
-      document.getElementById("title").innerHTML = currentComic.title;
+        document.getElementById("title").innerHTML = currentComic.title;
     }
     
     if (currentComic.caption) {
-      document.getElementById("caption").innerHTML = currentComic.caption;
+        document.getElementById("caption").innerHTML = currentComic.caption;
     }
     
 }
@@ -75,7 +75,7 @@ $("#send").click(function sendIt() {
     //blow out currentComic
     elementAPI.userData().setValue("currentComic", "");
      
-    //send NOTIFICATION to partner
+    //send notification to partner
     elementAPI.session().dowithPartner();
     alert("Your comic has been sent to " + elementAPI.partner().name() + "!");
 });
@@ -84,39 +84,37 @@ function masterLength() {
     var partnerArr = JSON.parse(elementAPI.partnerData().getValue("myComics"));
     var userArr = [];
     if (elementAPI.userData().getValue("myComics")) {
-      userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
+        userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
     }
     if (userArr.length >= partnerArr.length) {
-      return userArr.length;
+        return userArr.length;
     } else {
-      return partnerArr.length;
+        return partnerArr.length;
     }
 }
 
 function syncArray() { 
     var userArr;
     if (elementAPI.userData().getValue("myComics") !== undefined && elementAPI.userData().getValue("myComics") !== null) {
-      userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
+        userArr = JSON.parse(elementAPI.userData().getValue("myComics"));
     } else {
-      userArr = [];
+        userArr = [];
     }
-    //alert("userArr: "+ JSON.stringify(userArr));
     
     if (partnerArrayExists()) {
-      var partnerArr = JSON.parse(elementAPI.partnerData().getValue("myComics"));
-      syncedArray = [];
-      //alert("master length: " + masterLength());
-        for (i = 0; i < masterLength(); i++) {
-           if (userArr[i] === undefined) {
-             syncedArray[i] = partnerArr[i];
-           } else if (partnerArr[i] === undefined) {
-               syncedArray[i] = userArray[i];
-           } else if (userArr[i].timestamp >= partnerArr[i].timestamp) {
-               syncedArray[i] = userArr[i];
-           } else {
-               syncedArray[i] = partnerArr[i];
-           }
-        }
+        var partnerArr = JSON.parse(elementAPI.partnerData().getValue("myComics"));
+        syncedArray = [];
+            for (i = 0; i < masterLength(); i++) {
+                if (userArr[i] === undefined) {
+                    syncedArray[i] = partnerArr[i];
+                } else if (partnerArr[i] === undefined) {
+                    syncedArray[i] = userArray[i];
+                } else if (userArr[i].timestamp >= partnerArr[i].timestamp) {
+                    syncedArray[i] = userArr[i];
+                } else {
+                    syncedArray[i] = partnerArr[i];
+                }
+            }
         return syncedArray;
     } else {
         return userArr;

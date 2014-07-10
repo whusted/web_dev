@@ -12,8 +12,8 @@
 input[type="radio"] {
     -webkit-appearance: checkbox;
     -moz-appearance: checkbox;
-    -ms-appearance: checkbox;     /* not currently supported */
-    -o-appearance: checkbox;      /* not currently supported */
+    -ms-appearance: checkbox;
+    -o-appearance: checkbox;
 }
 
 </style>
@@ -43,14 +43,14 @@ $(document).ready(function() {
 
 function newComics() {
     if (elementAPI.partnerData().getValue("unseen") === "1") {
-      alert("You have a new comic to view!");
+        alert("You have a new comic to view!");
     }
 }
 
 $("#how_to_create").click(function() {
-  $("#TheFancybox").html("<p>Here's where Stephanie's example will go.</p>");
-  $(".fancyTrigger").fancybox();
-  $(".fancyTrigger").trigger('click');  
+    $("#TheFancybox").html("<p>Here's where Stephanie's example will go.</p>");
+    $(".fancyTrigger").fancybox();
+    $(".fancyTrigger").trigger('click');  
 });
 
 $("input").click(function fromMenu(event) {
@@ -58,10 +58,8 @@ $("input").click(function fromMenu(event) {
 
         if (id.localeCompare('view') === 0) {
           elementAPI.metrics()['menu'].updateValueForMetric(2);
-         //alert(JSON.stringify(elementAPI.metrics()));
         } else if (id.localeCompare('create') === 0) {
           elementAPI.metrics()['menu'].updateValueForMetric(1);
-          //alert(JSON.stringify(elementAPI.metrics()));
         } 
     });
       
