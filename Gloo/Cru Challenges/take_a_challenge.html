@@ -98,9 +98,16 @@
           
             // Non chromeless nav -- button highlights and wait for "next" click
             
+            var acceptedChallenges = [];
             // Add to databag
-            var stringedChallenge = JSON.stringify(currentCard);
-            elementAPI.userData().setValue("newChallenge", stringedChallenge);
+            if (elementAPI.userData().getValue("acceptedChallenges")) {
+                acceptedChallenges = JSON.parse(elementAPI.userData().getValue("acceptedChallenges"));
+            }
+            
+            var newChallenge = {card: currentCard, completed: false}; // new challenge object created with card object as first property
+            acceptedChallenges.unshift(newChallenge); // Adds element to front of array
+            var stringedArray = JSON.stringify(acceptedChallenges); // Prepare for databag
+            elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
         });
         
         /*------------ Testing ------------*/

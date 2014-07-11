@@ -17,16 +17,16 @@
 <script>
 
     /*-- Helper functions --*/
-    var getCurrentChallenges = function() {
+    var getChallenges = function() {
         var db = elementAPI.userData();
-        return JSON.parse(db.getValue("currentChallenges")); // What data structure is this?
+        return JSON.parse(db.getValue("acceptedChallenges")); // What data structure is this?
     }
 
     $(document).ready(function() {
         
         var user = elementAPI.user();
         
-        getCurrentChallenges();
+        getChallenges();
         
     });
       
