@@ -62,6 +62,7 @@
         
         // "Globals"
        var currentIndex = 0;
+       var currentCard; // Not sure if this is going to work in helper functions
 
         $(document).ready(function() {
             // Array of text challenges
@@ -69,7 +70,7 @@
             var db = elementAPI.userData();
             
             // "Top" card
-            var currentCard = cards[currentIndex];
+            currentCard = cards[currentIndex];
             displayCard(currentCard);
         });
         
@@ -93,10 +94,13 @@
             $(".fancyTrigger").fancybox();
             $(".fancyTrigger").trigger('click');  
           
-            //Chromeless nav -- straight to element with more   //info
+            //Chromeless nav -- straight to element with more info
           
-            // Non chromeless nav -- button highlights and 
-            // wait for "next" click
+            // Non chromeless nav -- button highlights and wait for "next" click
+            
+            // Add to databag
+            var stringedChallenge = JSON.stringify(currentCard);
+            elementAPI.userData().setValue("newChallenge", stringedChallenge);
         });
         
         /*------------ Testing ------------*/
