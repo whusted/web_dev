@@ -19,6 +19,33 @@
 
 <script>
 
+/*-- Parse and Stringify helper functions --*/
+
+var db = elementAPI.userData();
+
+var getChallengesArray() = function () {
+    return JSON.parse(db.getValue("acceptedChallenges"));
+}
+
+var getChallenge(index) = function () {
+    var arr = getChallengesArray();
+    return arr[index];
+}
+
+var getCard = function () {
+    
+}
+
+var getCard = function () {
+    var arr = getChallengesArray();
+    var challenge = getChallenge(0);
+    var card = 
+    
+    
+    
+    return card;
+}
+
 $(document).ready(function() {
     var db = elementAPI.userData();
     var user = elementAPI.user();
