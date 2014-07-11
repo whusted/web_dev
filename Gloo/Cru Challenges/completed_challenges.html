@@ -47,10 +47,18 @@
         return challenge.completed;
     }
     
+    var newDiv = function (card) {
+        return ("<div>Title: " + card.title + " " + "Content: " + card.content "</div>");
+    } 
+    
+    /* -- Temporary way to display challenges to test backend -- */
+    
     var displayCompletedChallenges = function () {
-        var challenges = getChallengesArray();
+        var challenges = getCompleted();
         
-        $("#challenges").text(getCardAtIndex());
+        for (var i = 0; i < challenges.length; i++) {
+            $(body).append(newDiv(getCardAtIndex(i)));
+        }
         
     };
     
@@ -85,6 +93,9 @@
     $(document).ready(function() {
         if (getCompleted()) {
             displayCompletedChallenges(getCompleted());
+        } else {
+            alert("No completed challenges...YET!");
+            //Redirect to menu?? That'd be cool
         }
     });
           
