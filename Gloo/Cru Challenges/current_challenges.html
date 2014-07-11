@@ -1,35 +1,109 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 
-<!-- jQuery -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <style>
-    .title {
-        text-align: center;
-    }
-    
+.title {
+    text-align: center;
+}
+
 </style>
+
 <body>
     <div class="title">
-        <h4>Current Challenges</h4>
+        <h4>Uncompleted Challenges</h4>
     </div>
     <hr>
-
-<script>
-
-    /*-- Helper functions --*/
-    var getChallenges = function() {
-        var db = elementAPI.userData();
-        return JSON.parse(db.getValue("acceptedChallenges")); // What data structure is this?
+    
+    <script>
+    
+    /*-- Parse and Stringify helper functions --*/
+    
+    var db = elementAPI.userData();
+    
+    var getChallengesArray = function () {
+        if (db.getValue("acceptedChallenges")) {
+            return JSON.parse(db.getValue("acceptedChallenges"));
+        } else {
+            return false;
+        }
+        
+    };
+    
+    var getChallenge = function (index) {
+        var arr = getChallengesArray();
+        return arr[index];
+    };
+    
+    var getCardAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.card;
+    };
+    
+    var getStatusAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.completed;
     }
-
+    
+    var newDiv = function (card) {
+        return ("<div>Title: " + card.title + " " + "Content: " + card.content "</div>");
+    } 
+    
+    /* -- Temporary way to display challenges to test backend -- */
+    
+    var displayUncompletedChallenges = function () {
+        var challenges = getUncompleted();
+        
+        for (var i = 0; i < challenges.length; i++) {
+            $(body).append(newDiv(getCardAtIndex(i)));
+        }
+        
+    };
+    
+    /*-- Get array of uncompleted challenges--*/
+    
+    var anyUncompleted = function () {
+        if (getChallengesArray()) {
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (!getStatusAtIndex(i)) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    var getUncompleted = function () {
+        var uncompleted;
+        if (anyUncompleted) {
+            uncompleted = [];
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (!getStatusAtIndex(i)) {
+                    uncompleted.push(getChallenge(i));
+                }
+            } 
+        }
+        return uncompleted;
+    }
+    
+    
     $(document).ready(function() {
-        
-        var user = elementAPI.user();
-        
-        getChallenges();
-        
+        if (db.getValue("acceptedChallenges")) {
+            if (getUncompleted()) {
+                displayUncompletedChallenges(getUncompleted());
+            } else {
+                alert("You don't have any challenges in progress. Take another!");
+                //Redirect to menu?? That'd be cool
+            }
+        } else {
+            alert("You haven't accepted any challenges...YET!");
+        }
     });
-      
-</script>
+          
+    </script>
+    
+    
 </body>
-
