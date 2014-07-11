@@ -1,55 +1,94 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-
-</style>
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 
 <style>
-
 .title {
     text-align: center;
 }
 
 </style>
 
-<div class="title">
-    <h4>Completed Challenges</h4>
-</div>
-<hr>
-
-<script>
-
-/*-- Parse and Stringify helper functions --*/
-
-var db = elementAPI.userData();
-
-var getChallengesArray() = function () {
-    return JSON.parse(db.getValue("acceptedChallenges"));
-}
-
-var getChallenge(index) = function () {
-    var arr = getChallengesArray();
-    return arr[index];
-}
-
-var getCard = function () {
+<body>
+    <div class="title">
+        <h4>Completed Challenges</h4>
+    </div>
+    <hr>
     
-}
-
-var getCard = function () {
-    var arr = getChallengesArray();
-    var challenge = getChallenge(0);
-    var card = 
+    <script>
     
+    /*-- Parse and Stringify helper functions --*/
     
-    
-    return card;
-}
-
-$(document).ready(function() {
     var db = elementAPI.userData();
-    var user = elementAPI.user();
     
-});
-      
-</script>
+    var getChallengesArray = function () {
+        if (db.getValue("acceptedChallenges")) {
+            return JSON.parse(db.getValue("acceptedChallenges"));
+        } else {
+            return false;
+        }
+        
+    };
+    
+    var getChallenge = function (index) {
+        var arr = getChallengesArray();
+        return arr[index];
+    };
+    
+    var getCardAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.card;
+    };
+    
+    var getStatusAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.completed;
+    }
+    
+    var displayCompletedChallenges = function () {
+        var challenges = getChallengesArray();
+        
+        $("#challenges").text(getCardAtIndex());
+        
+    };
+    
+    /*-- Get array of completed challenges--*/
+    
+    var anyCompleted = function () {
+        if (getChallengesArray()) {
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (getStatusAtIndex(i)) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    var getCompleted = function () {
+        var completed;
+        if (anyCompleted) {
+            completed = [];
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (getStatusAtIndex(i)) {
+                    completed.push(getChallenge(i));
+                }
+            } 
+        }
+        return completed;
+    }
+    
+    
+    $(document).ready(function() {
+        if (getCompleted()) {
+            displayCompletedChallenges(getCompleted());
+        }
+    });
+          
+    </script>
+    
+    
+</body>
