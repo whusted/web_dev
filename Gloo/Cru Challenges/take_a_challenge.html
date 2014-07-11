@@ -1,0 +1,130 @@
+<link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
+<link rel="stylesheet" type="text/css" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css"></link>
+
+<!-- jQuery -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!--- Fancybox -->
+<script src="http://dev.be-pixel.com/newsletter4/js/jquery.fancybox.pack.js"></script>
+
+<style>
+    .title {
+        text-align: center;
+    }
+    
+</style>
+<body>
+    <div class="title">
+        <h4>Take a Challenge</h4>
+    </div>
+    <hr>
+        <div id="current_card"></div>
+        <button class="btn" id="not_now">Not Now</button>
+        <button class="btn" id="accept">Accept</button>
+        <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
+        <div id="TheFancybox"></div>
+   <script>
+        
+        /*--------------- Card object/prototype ------------*/
+        
+        var Card = function(title, content, image, backside) {
+          this.title = title;
+          this.content = content;
+          this.image = image;
+          this.backside = backside;
+        };
+         
+        Card.prototype.toString = function () {
+          return this.title + ' ' + this.content + ' ' + this.image + ' ' + this.backside;
+        };
+        /*------------ Helper functions ------------*/
+        
+        var shuffleArray = function (array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                var temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        };
+        
+        var lastCard = function (array, currentIndex) {
+            return ((array.length) === currentIndex);
+        };
+        
+        var displayCard = function (currentCard) {
+            $("#current_card").text(currentCard);
+            return true;
+        };
+        
+        
+        /*------------ Testing ------------*/
+        
+        // Reusable index variable
+        var i;
+        
+        // cards array
+        var cards = [];
+        
+        // Test titles
+        var titles = ["title 1", "title 2", "title 3", "title 4", "title 5", "title 6", "title 7", "title 8", "title 9", "title 10"];
+        
+        //Test content
+        var content = ["content 1","content 2","content 3","content 4","content 5","content 6","content 7","content 8","content 9","content 10"];
+        
+        for (i = 0; i < 10; i++) {
+          cards[i] = new Card(titles[i], content[i]);
+          
+        }
+        
+        // Shuffle test
+        var shuffled = shuffleArray(cards);
+        
+        for (i = 0; i < cards.length; i++) {
+          //alert(cards[i]);
+        }
+        
+        /* ------ The real stuff -----*/
+        
+        // "Globals"
+       var currentIndex = 0;
+
+        $(document).ready(function() {
+            // Array of text challenges
+            var CHALLENGES = ["Challenge 1", "Challenge 2", "Challenge 3", "Challenge 4"];
+            var db = elementAPI.userData();
+            
+            // "Top" card
+            var currentCard = cards[currentIndex];
+            displayCard(currentCard);
+        });
+        
+        
+        $("#not_now").click(function() {
+          currentIndex++;
+          if (lastCard(cards, currentIndex)) {
+            currentIndex = 0;
+            shuffleArray(cards);
+            currentCard = cards[currentIndex];
+            displayCard(currentCard);
+          } else {
+            currentCard = cards[currentIndex];
+          }
+          displayCard(currentCard);
+        });
+            
+        $("#accept").click(function() {
+            // Temp(?) behavior -- fancybox pop up
+            $("#TheFancybox").html("<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p>");
+            $(".fancyTrigger").fancybox();
+            $(".fancyTrigger").trigger('click');  
+          
+            //Chromeless nav -- straight to element with more   //info
+          
+            // Non chromeless nav -- button highlights and 
+            // wait for "next" click
+        });
+        
+   </script>
+</body>
