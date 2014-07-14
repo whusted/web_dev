@@ -140,6 +140,13 @@ hr {
     </div>
     
     <script>
+    var addRow = function (ID, Class, Title) {
+        $("#table").find('tbody')
+                .append($('<tr id="item5"></tr>')
+                    .append($('<td><div id=' + ID + 'class=' + Class +'></td><td><div class="list-title">' + Title + '<br></div>')
+                    )
+                );
+    };
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
@@ -151,6 +158,11 @@ hr {
         /* Testing */
         var testArr = ["Challenge 1", "Challenge 2", "Challenge 3"];
         var numberOfItems = testArr.length; // get from getChallengesArray().length
+        // Here's where you left off
+//        for (var i = 0; i < numberOfItems; i++) {
+//            addRow(Id, Class, Title);
+//        }
+        
         $("#table").find('tbody')
             .append($('<tr id="item5"></tr>')
                 .append($('<td><div id="item1Checkbox" class="unchecked"></td><td><div class="list-title">Challenge 1<br> <a href="">More Info</a></div>')
