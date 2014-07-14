@@ -47,21 +47,6 @@
         return challenge.completed;
     }
     
-    var newDiv = function (card) {
-        return ("<div>Title: " + card.title + " " + "Content: " + card.content "</div>");
-    } 
-    
-    /* -- Temporary way to display challenges to test backend -- */
-    
-    var displayUncompletedChallenges = function () {
-        var challenges = getUncompleted();
-        
-        for (var i = 0; i < challenges.length; i++) {
-            $(body).append(newDiv(getCardAtIndex(i)));
-        }
-        
-    };
-    
     /*-- Get array of uncompleted challenges--*/
     
     var anyUncompleted = function () {
@@ -74,7 +59,7 @@
         } else {
             return false;
         }
-    }
+    };
     
     var getUncompleted = function () {
         var uncompleted;
@@ -87,10 +72,31 @@
             } 
         }
         return uncompleted;
-    }
+    };
+    
+    var newDiv = function (card) {
+        return ("<div>Title: " + card.title + " " + "Content: " + card.content "</div>");
+    } 
+    
+    /* -- Temporary way to display challenges to test backend -- */
+    
+    var displayUncompletedChallenges = function () {
+        var challenges = getUncompleted();    
+        for (var i = 0; i < challenges.length; i++) {
+            // Here's the temporary part
+            $(body).append(newDiv(getCardAtIndex(i)));
+        }     
+    };
+    
+    var challengeCompleted = function (obj) {
+        obj.completed = true;
+    };
+    
+    
     
     
     $(document).ready(function() {
+        // Check if it's user's first time
         if (db.getValue("acceptedChallenges")) {
             if (getUncompleted()) {
                 displayUncompletedChallenges(getUncompleted());
@@ -102,7 +108,9 @@
             alert("You haven't accepted any challenges...YET!");
         }
     });
-          
+    
+    
+    
     </script>
     
     

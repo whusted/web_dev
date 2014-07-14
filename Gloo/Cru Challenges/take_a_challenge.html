@@ -24,8 +24,8 @@
         <button class="btn" id="accept">Accept</button>
         <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
         <div id="TheFancybox"></div>
-   <script>
         
+   <script> 
         /*--------------- Card object/prototype ------------*/
         
         var Card = function (title, content, image, backside) {
@@ -95,12 +95,12 @@
             $(".fancyTrigger").fancybox();
             $(".fancyTrigger").trigger('click');  
           
-            //Chromeless nav -- straight to element with more info
-          
+            // Chromeless nav -- straight to element with more info, or back to menu
+            
             // Non chromeless nav -- button highlights and wait for "next" click
             
             var acceptedChallenges = [];
-            // Add to databag
+            // Add to databag -- first check if it's user's first time
             if (elementAPI.userData().getValue("acceptedChallenges")) {
                 acceptedChallenges = JSON.parse(elementAPI.userData().getValue("acceptedChallenges"));
             }
