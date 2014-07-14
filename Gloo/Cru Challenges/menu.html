@@ -2,6 +2,7 @@
 
 </style>
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
+<link rel="stylesheet" href="gloo_assets_198/JORDANFRAY/ASSETS/STYLESHEETS/normalize.css"/>
 
 <style>
 .menu_buttons {
@@ -13,49 +14,172 @@
     text-align: center;
 }
 
+@font-face {
+            font-family: "museosans_100";
+            src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_100.ttf");
+        }
+        
+        @font-face {
+            font-family: "museosans_300";
+            src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_300.ttf");
+        }
+        
+        @font-face {
+            font-family: "museosans_500";
+            src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_500.ttf");
+        }
+        
+        @font-face {
+            font-family: "museosans_700";
+            src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_700.ttf");
+        }
+        
+        @font-face {
+            font-family: "museosans_900";
+            src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_900.ttf");
+        }
+        
+        html, body {
+            margin: 15px 15px;
+        }
+        
+        h1 {
+            font-family: "museosans_100";
+            font-size: 1.3em;
+            margin: 0 0 15px 0;
+            color: #323232;
+        }
+        
+        p {
+            font-family: "Helvetica Neue";
+            font-size: 14px;
+            margin: 0 0 15px 0;
+            color: #8b8b8b;
+            font-weight: 400;
+        }
+        
+        a {
+            color: #38b3ce;
+            font-family: "museosans_500";
+            font-size: 12px;
+        }
+        
+        hr {
+            width: auto;
+            height: 1px;
+            background-color: #bdbdbd;
+            border: none;
+            margin: 0 0 15px 0;
+        }
+        
+        .list-title {
+            font-family: "Helvetica Neue";
+            font-size: 13px;
+            margin: 0 0 15px 0;
+            color: #000;
+            font-weight: 500;
+        }
+        
+        .checked {
+            margin: 0 15px 15px 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            background: url("gloo_assets_321/gloo_sass/images/checkBoxFill.jpg") no-repeat 20px 20px;
+            background-size: 100%;
+            background-position: 92% 80%;
+            border: 1px solid #7c7c7c;
+            background-color: #fafafa;
+            -webkit-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+            -moz-box-shadow:    inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+            box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+        }
+        
+        .unchecked {
+            margin: 0 15px 15px 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            border: 1px solid #7c7c7c;
+            background-color: #fafafa;
+            -webkit-box-shadow: inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+            -moz-box-shadow:    inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+            box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
+        }
+
 </style>
 
 <div class="title">
     <h1>Menu</h1>
 </div>
 <hr>
-<div class="menu_buttons">
-  <a class="btn full-width" id="new">Take a Challenge</a>
-  <a class="btn full-width" id="current">Current Challenges</a>
-  <a class="btn full-width" id="completed">Completed Challenges</a>
-</div>
+  <a class="btn full-width align-center" id="take">Take a Challenge</a>
 <hr>
+
+<div id="element1">
+    <h1>Finding a Sponsor</h1>
+    <p>The following steps will help you find and secure a sponsor for your recovery.</p>
+    <hr>
+    <table>
+        <tr id="item1">
+            <td><div id="item1Checkbox" class="unchecked"></td>
+            <td><div class="list-title">Step 1<br> <a href="">More Info</a></div></td>
+        </tr>
+        <tr id="item2">
+            <td><div id="item2Checkbox" class="unchecked"></td>
+            <td><div class="list-title">Step 2<br> <a href="">More Info</a></div></td>
+        </tr>
+        <tr id="item3">
+            <td><div id="item3Checkbox" class="unchecked"></td>
+            <td><div class="list-title">Step 3<br> <a href="">More Info</a></div></td>
+        </tr>
+        <tr id="item4">
+            <td><div id="item4Checkbox" class="unchecked"></td>
+            <td><div class="list-title">Step 4<br> <a href="">More Info</a></div></td>
+        </tr>
+    </table>
+</div>
 
 <script>
 
 $(document).ready(function() {
-    alert(JSON.stringify(elementAPI.metrics()));
-    elementAPI.metrics()['menu2'].updateValueForMetric(3); // Why the f isn't this working
+    elementAPI.metrics()['score'].updateValueForMetric(0);
     
-    setTimeout(function() { unfinsihedChallenge() },500);
+    /* Checklist */
+    db = elementAPI.userData();
+    var numberOfitems = 4; // get from elementAPI.getValue("acceptedChallenges")
+    
+    var check = function(number) {
+        var c = "item" + number + "Checkbox";
+        $("#" + c).click(function() {
+            var d = elementAPI.userData().getValue(c);
+            if ( d === "true" || d === true) {
+                $("#" + c).removeClass("checked").addClass("unchecked");
+                db.setValue(c, false);
+            } else {
+                $("#" + c).removeClass("unchecked").addClass("checked");
+                db.setValue(c, true);
+            }
+        });
+    };
+    
+    for (var i = 0; i <= numberOfitems; i++) {
+        var a = "item" + [i] + "Checkbox";
+        var b = elementAPI.userData().getValue(a);
+        //alert(b);
+        if ( b === "true") {
+            $("#" + a).removeClass("unchecked").addClass("checked");
+        };
+        check([i]);
+    }
 });
 
-function unfinsihedChallenge() {
-    if (elementAPI.userData().getValue("current") === "1") {
-        alert("You have an unfinished challenge!");
-    }
-}
-
-$(".menu_buttons").click(function fromMenu(event) {
-        var id = event.target.id;
-        // Peek at event target id
-        alert(id);
-
-        if (id.localeCompare('new') === 0) {
-            elementAPI.metrics()['menu2'].updateValueForMetric(0);
-            alert(JSON.stringify(elementAPI.metrics()));
-        } else if (id.localeCompare('current') === 0) {
-            elementAPI.metrics()['menu2'].updateValueForMetric(1);
-            alert(JSON.stringify(elementAPI.metrics()));
-        } else if (id.localeCompare('completed') === 0) {
-            elementAPI.metrics()['menu2'].updateValueForMetric(2);
-            alert(JSON.stringify(elementAPI.metrics()));
-        }
+$("#take").click(function() {
+    elementAPI.metrics()['score'].updateValueForMetric(1);
+    setTimeout(function() {
+    //Redirect to next element
+    }, 500);
+    alert(JSON.stringify(elementAPI.metrics()));
 });
       
 </script>
