@@ -18,7 +18,7 @@
         <h4>Take a Challenge</h4>
     </div>
     <hr>
-        <!-- Dummy div; replace with cards -->
+        <!-- Below is a dummy div; replace with cards -->
         <div id="current_card"></div>
         <button class="btn" id="not_now">Not Now</button>
         <button class="btn" id="accept">Accept</button>
@@ -28,7 +28,7 @@
         
         /*--------------- Card object/prototype ------------*/
         
-        var Card = function(title, content, image, backside) {
+        var Card = function (title, content, image, backside) {
             this.title = title;
             this.content = content;
             this.image = image;
@@ -38,6 +38,7 @@
         Card.prototype.toString = function () {
             return this.title + ' ' + this.content + ' ' + this.image + ' ' + this.backside;
         };
+        
         /*------------ Helper functions ------------*/
         
         var shuffleArray = function (array) {
