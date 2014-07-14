@@ -121,10 +121,10 @@ hr {
         <hr>
         <table id="table">
             <tr id="item1">
-                <td><div id="item1Checkbox" class="unchecked"></td>
-                <td><div class="list-title">Step 1<br> <a href="">More Info</a></div></td>
+                <!--<td><div id="item1Checkbox" class="unchecked"></td>
+                <td><div class="list-title">Step 1<br> <a href="">More Info</a></div></td> -->
             </tr>
-            <tr id="item2">
+            <!--<tr id="item2">
                 <td><div id="item2Checkbox" class="unchecked"></td>
                 <td><div class="list-title">Step 2<br> <a href="">More Info</a></div></td>
             </tr>
@@ -135,7 +135,7 @@ hr {
             <tr id="item4">
                 <td><div id="item4Checkbox" class="unchecked"></td>
                 <td><div class="list-title">Step 4<br> <a href="">More Info</a></div></td>
-            </tr>
+            </tr> -->
         </table>
     </div>
     
@@ -153,7 +153,7 @@ hr {
         var numberOfItems = testArr.length; // get from getChallengesArray().length
         $("#table").find('tbody')
             .append($('<tr id="item5"></tr>')
-                .append($('<td><div id="item5Checkbox" class="unchecked"></td><td><div class="list-title">Step 5<br> <a href="">More Info</a></div>')
+                .append($('<td><div id="item1Checkbox" class="unchecked"></td><td><div class="list-title">Challenge 1<br> <a href="">More Info</a></div>')
                 )
             );
         
