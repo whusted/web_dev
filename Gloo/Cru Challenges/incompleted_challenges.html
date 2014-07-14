@@ -11,7 +11,7 @@
 
 <body>
     <div class="title">
-        <h4>Uncompleted Challenges</h4>
+        <h4>Incomplete Challenges</h4>
     </div>
     <hr>
     
@@ -47,9 +47,9 @@
         return challenge.completed;
     }
     
-    /*-- Get array of uncompleted challenges--*/
+    /*-- Get array of incomplete challenges--*/
     
-    var anyUncompleted = function () {
+    var anyIncomplete = function () {
         if (getChallengesArray()) {
             for (var i = 0; i < getChallengesArray().length; i++) {
                 if (!getStatusAtIndex(i)) {
@@ -61,17 +61,17 @@
         }
     };
     
-    var getUncompleted = function () {
-        var uncompleted;
-        if (anyUncompleted) {
-            uncompleted = [];
+    var getIncomplete = function () {
+        var incomplete;
+        if (anyIncomplete) {
+            incomplete = [];
             for (var i = 0; i < getChallengesArray().length; i++) {
                 if (!getStatusAtIndex(i)) {
-                    uncompleted.push(getChallenge(i));
+                    incomplete.push(getChallenge(i));
                 }
             } 
         }
-        return uncompleted;
+        return incomplete;
     };
     
     var newDiv = function (card) {
@@ -80,8 +80,8 @@
     
     /* -- Temporary way to display challenges to test backend -- */
     
-    var displayUncompletedChallenges = function () {
-        var challenges = getUncompleted();    
+    var displayIncompleteChallenges = function () {
+        var challenges = getIncomplete();    
         for (var i = 0; i < challenges.length; i++) {
             // Here's the temporary part
             $(body).append(newDiv(getCardAtIndex(i)));
@@ -98,8 +98,8 @@
     $(document).ready(function() {
         // Check if it's user's first time
         if (db.getValue("acceptedChallenges")) {
-            if (getUncompleted()) {
-                displayUncompletedChallenges(getUncompleted());
+            if (getIncomplete()) {
+                displayIncompleteChallenges(getIncomplete());
             } else {
                 alert("You don't have any challenges in progress. Take another!");
                 //Redirect to menu?? That'd be cool
