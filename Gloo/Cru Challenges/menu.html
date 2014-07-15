@@ -152,14 +152,69 @@ hr {
     
     var addRow = function (ID, Class, Title) {
         var string = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
-        alert(string);
         $("#table").find('tbody')
                 .append($('<tr id="item5"></tr>')
                     .append($(string)
                     )
                 );
-        alert
     };
+    
+    /*-- Parse and Stringify helper functions --*/
+        
+    var db = elementAPI.userData();
+    
+    var getChallengesArray = function () {
+        if (db.getValue("acceptedChallenges")) {
+            return JSON.parse(db.getValue("acceptedChallenges"));
+        } else {
+            return false;
+        }
+        
+    };
+    
+    var getChallenge = function (index) {
+        var arr = getChallengesArray();
+        return arr[index];
+    };
+    
+    var getCardAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.card;
+    };
+    
+    var getStatusAtIndex = function (index) {
+        var arr = getChallengesArray();
+        var challenge = getChallenge(index);
+        return challenge.completed;
+    }
+    
+    /*-- Get array of completed challenges--*/
+    
+    var anyCompleted = function () {
+        if (getChallengesArray()) {
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (getStatusAtIndex(i)) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    var getCompleted = function () {
+        var completed;
+        if (anyCompleted) {
+            completed = [];
+            for (var i = 0; i < getChallengesArray().length; i++) {
+                if (getStatusAtIndex(i)) {
+                    completed.push(getChallenge(i));
+                }
+            } 
+        }
+        return completed;
+    }
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
@@ -218,78 +273,6 @@ hr {
         }, 500);
         alert(JSON.stringify(elementAPI.metrics()));
     });
-    
-    /*-- Parse and Stringify helper functions --*/
-        
-        var db = elementAPI.userData();
-        
-        var getChallengesArray = function () {
-            if (db.getValue("acceptedChallenges")) {
-                return JSON.parse(db.getValue("acceptedChallenges"));
-            } else {
-                return false;
-            }
-            
-        };
-        
-        var getChallenge = function (index) {
-            var arr = getChallengesArray();
-            return arr[index];
-        };
-        
-        var getCardAtIndex = function (index) {
-            var arr = getChallengesArray();
-            var challenge = getChallenge(index);
-            return challenge.card;
-        };
-        
-        var getStatusAtIndex = function (index) {
-            var arr = getChallengesArray();
-            var challenge = getChallenge(index);
-            return challenge.completed;
-        }
-        
-    //    var newDiv = function (card) {
-    //        return ("<div>Title: " + card.title + " " + "Content: " + card.content "</div>");
-    //    } 
-        
-        /* -- Temporary way to display challenges to test backend -- */
-        
-        var displayCompletedChallenges = function () {
-            var challenges = getCompleted();
-            
-            for (var i = 0; i < challenges.length; i++) {
-                $(body).append(newDiv(getCardAtIndex(i)));
-            }
-            
-        };
-        
-        /*-- Get array of completed challenges--*/
-        
-        var anyCompleted = function () {
-            if (getChallengesArray()) {
-                for (var i = 0; i < getChallengesArray().length; i++) {
-                    if (getStatusAtIndex(i)) {
-                        return true;
-                    }
-                }
-            } else {
-                return false;
-            }
-        }
-        
-        var getCompleted = function () {
-            var completed;
-            if (anyCompleted) {
-                completed = [];
-                for (var i = 0; i < getChallengesArray().length; i++) {
-                    if (getStatusAtIndex(i)) {
-                        completed.push(getChallenge(i));
-                    }
-                } 
-            }
-            return completed;
-        }
         
         
         $(document).ready(function() {
