@@ -189,19 +189,6 @@ hr {
         }
     };
     
-    var getCompleted = function () {
-        var completed;
-        if (anyCompleted()) {
-            completed = [];
-            for (var i = 0; i < getChallengesArray().length; i++) {
-                if (getStatusAtIndex(i)) {
-                    completed.push(getChallenge(i));
-                }
-            } 
-        }
-        return completed;
-    };
-    
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
@@ -211,7 +198,7 @@ hr {
             alert("You haven't accepted any challenges...YET!");
         }
        
-        /* Checklist */
+        /*Initiate table with new rows, including toggle dropdowns*/
         var initiateTable = function () {
             var challengesArr = getChallengesArray();
             var numberOfItems = challenges.length;
@@ -230,6 +217,7 @@ hr {
             }
         };
         
+        /* Checklist */
         var check = function (number) {
             var c = "Challenge" + number;
             $("#" + c).click(function() {
