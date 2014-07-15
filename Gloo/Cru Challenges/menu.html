@@ -134,10 +134,11 @@ hr {
         }
     };
     
-    var addRow = function (ID, Class, Title) {
+    var addRow = function (ID, Class, Title, Content) {
         var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
+        alert("new Row: " + newRow);
         $("#table").find('tbody')
-                .append($('<tr id="item5"></tr>')
+                .append($('<tr id="item5"></tr>') //Check this item5 business
                     .append($(newRow)
                     )
                 );
@@ -170,7 +171,7 @@ hr {
     var getStatusAtIndex = function (index) {
         var arr = getChallengesArray();
         var challenge = getChallenge(index);
-        alert(challenge);
+        alert("LL: " + JSON.stringify(challenge));
         return challenge.completed;
     };
     
@@ -203,46 +204,37 @@ hr {
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
-        if (anyCompleted()) {
+        if (getChallengesArray()) {
             // display rows of challenges
-            // initiateTable();
+            initiateTable();
         } else {
-            //alert("No completed challenges...YET!");
-            //Redirect to menu?? That'd be cool
+            alert("You haven't accepted any challenges...YET!");
         }
-        
-        /* Testing */
-        var challenge1 = {title: "Challenge1", content: " 1 content content content", card: "img1", completed: false, group: "DO"};
-        var challenge2 = {title: "Challenge2", content: " 2 content content content", card: "img2", completed: false, group: "SAY"};
-        var challenge3 = {title: "Challenge3", content: " 3 content content content", card: "img3", completed: false, group: "ACT"};
-        var challenge4 = {title: "Challenge4", content: " 4 content content content", card: "img4", completed: false, group: "GIVE"};
-        var testArr = [challenge1, challenge2, challenge3, challenge4];
-        var numberOfItems = testArr.length; // get from getChallengesArray().length
        
         /* Checklist */
         var initiateTable = function () {
+            var challengesArr = getChallengesArray();
+            var numberOfItems = challenges.length;
             var challenge;
             var Id;
             var Class;
             var Title;
+            var Content;
             for (var i = 0; i < numberOfItems; i++) {
-                challenge = testArr[i]; //change to getChallengesArray()
+                challenge = challengesArr[i];
                 Id = challenge.title;
                 Class = getClass(challenge.completed);
                 Title = challenge.title;
-                addRow(Id, Class, Title);
+                Content = challenge.content;
+                addRow(Id, Class, Title, Content);
             }
         };
-        
-        // Just for testing
-        initiateTable();
-        
         
         var check = function (number) {
             var c = "Challenge" + number;
             $("#" + c).click(function() {
                 var d = elementAPI.userData().getValue(c);
-                alert(d);
+                //alert(JSON.stringify(d));
                 if ( d === "true" || d === true) {
                     $("#" + c).removeClass("checked").addClass("unchecked");
                     db.setValue(c, false);
