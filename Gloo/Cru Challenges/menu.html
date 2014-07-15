@@ -110,7 +110,7 @@ hr {
 </style>
 <body>
     <div class="title">
-        <h1>Menu</h1>
+        <h2>Menu</h2>
     </div>
     <hr>
       <a class="btn full-width align-center" id="take">Take a Challenge</a>
@@ -140,39 +140,55 @@ hr {
     </div>
     
     <script>
+    
+    // Lame way to get the class
+    var getClass = function (boolean) {
+        if (boolean) {
+            return "checked";
+        } else {
+            return "unchecked";
+        }
+    };
+    
     var addRow = function (ID, Class, Title) {
+        var string = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
+        alert(string);
         $("#table").find('tbody')
                 .append($('<tr id="item5"></tr>')
-                    .append($('<td><div id=' + ID + 'class=' + Class +'></td><td><div class="list-title">' + Title + '<br></div>')
+                    .append($(string)
                     )
                 );
+        alert
     };
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
-        
+        //alert(JSON.stringify(elementAPI.userData()));
         /* Checklist */
         db = elementAPI.userData();
-        alert("Stringed: " + JSON.stringify(db));
         
         /* Testing */
-        var testArr = ["Challenge 1", "Challenge 2", "Challenge 3"];
+        var challenge1 = {title: "Challenge1", content: " 1 content content content", card: "img1", completed: false, group: "DO"};
+        var challenge2 = {title: "Challenge2", content: " 2 content content content", card: "img2", completed: false, group: "SAY"};
+        var challenge3 = {title: "Challenge3", content: " 3 content content content", card: "img3", completed: false, group: "ACT"};
+        var testArr = [challenge1, challenge2, challenge3];
         var numberOfItems = testArr.length; // get from getChallengesArray().length
-        // Here's where you left off
-//        for (var i = 0; i < numberOfItems; i++) {
-//            addRow(Id, Class, Title);
-//        }
+       
+        var challenge;
+        var Id;
+        var Class;
+        var Title;
+        for (var i = 0; i < numberOfItems; i++) {
+            challenge = testArr[i];
+            Id = challenge.title;
+            Class = getClass(challenge.completed);
+            Title = challenge.title;
+            addRow(Id, Class, Title);
+        }
         
-        $("#table").find('tbody')
-            .append($('<tr id="item5"></tr>')
-                .append($('<td><div id="item1Checkbox" class="unchecked"></td><td><div class="list-title">Challenge 1<br> <a href="">More Info</a></div>')
-                )
-            );
-        
-        var check = function(number) {
-            var c = "item" + number + "Checkbox";
+        var check = function (number) {
+            var c = "Challenge" + number;
             $("#" + c).click(function() {
-                alert("#" + c);
                 var d = elementAPI.userData().getValue(c);
                 alert(d);
                 if ( d === "true" || d === true) {
@@ -186,7 +202,7 @@ hr {
         };
         
         for (var i = 0; i <= numberOfItems; i++) {
-            var a = "item" + [i] + "Checkbox";
+            var a = "Challenge" + [i];
             var b = elementAPI.userData().getValue(a);
             if ( b === "true") {
                 $("#" + a).removeClass("unchecked").addClass("checked");
@@ -198,7 +214,7 @@ hr {
     $("#take").click(function() {
         elementAPI.metrics()['score'].updateValueForMetric(1);
         setTimeout(function() {
-        //Redirect to next element
+        //Redirect to next element with chromeless
         }, 500);
         alert(JSON.stringify(elementAPI.metrics()));
     });
