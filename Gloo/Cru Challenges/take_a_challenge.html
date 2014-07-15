@@ -82,7 +82,6 @@
                     currentIndex = 0;
                     shuffleArray(cards);
                     currentCard = cards[currentIndex];
-                    displayCard(currentCard);
                 } else {
                     currentCard = cards[currentIndex];
                 }
@@ -93,7 +92,7 @@
             // Temp(?) behavior -- fancybox pop up
             $("#TheFancybox").html("<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p>");
             $(".fancyTrigger").fancybox();
-            $(".fancyTrigger").trigger('click');  
+            $(".fancyTrigger").trigger('click');
           
             // Chromeless nav -- straight to element with more info, or back to menu
             
@@ -109,6 +108,10 @@
             acceptedChallenges.unshift(newChallenge); // Adds element to front of array
             var stringedArray = JSON.stringify(acceptedChallenges); // Prepare for databag
             elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
+            // Now show next card behind fancybox
+            currentIndex++;
+            currentCard = cards[currentIndex];
+            displayCard(currentCard);
         });
         
         /*------------ Testing ------------*/

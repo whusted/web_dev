@@ -1,6 +1,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-</style>
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 <link rel="stylesheet" href="gloo_assets_198/JORDANFRAY/ASSETS/STYLESHEETS/normalize.css"/>
 
@@ -121,21 +120,6 @@ hr {
         <hr>
         <table id="table">
             <tr id="item1">
-                <!--<td><div id="item1Checkbox" class="unchecked"></td>
-                <td><div class="list-title">Step 1<br> <a href="">More Info</a></div></td> -->
-            </tr>
-            <!--<tr id="item2">
-                <td><div id="item2Checkbox" class="unchecked"></td>
-                <td><div class="list-title">Step 2<br> <a href="">More Info</a></div></td>
-            </tr>
-            <tr id="item3">
-                <td><div id="item3Checkbox" class="unchecked"></td>
-                <td><div class="list-title">Step 3<br> <a href="">More Info</a></div></td>
-            </tr>
-            <tr id="item4">
-                <td><div id="item4Checkbox" class="unchecked"></td>
-                <td><div class="list-title">Step 4<br> <a href="">More Info</a></div></td>
-            </tr> -->
         </table>
     </div>
     
@@ -151,10 +135,10 @@ hr {
     };
     
     var addRow = function (ID, Class, Title) {
-        var string = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
+        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
         $("#table").find('tbody')
                 .append($('<tr id="item5"></tr>')
-                    .append($(string)
+                    .append($(newRow)
                     )
                 );
     };
@@ -186,8 +170,9 @@ hr {
     var getStatusAtIndex = function (index) {
         var arr = getChallengesArray();
         var challenge = getChallenge(index);
+        alert(challenge);
         return challenge.completed;
-    }
+    };
     
     /*-- Get array of completed challenges--*/
     
@@ -201,11 +186,11 @@ hr {
         } else {
             return false;
         }
-    }
+    };
     
     var getCompleted = function () {
         var completed;
-        if (anyCompleted) {
+        if (anyCompleted()) {
             completed = [];
             for (var i = 0; i < getChallengesArray().length; i++) {
                 if (getStatusAtIndex(i)) {
@@ -214,32 +199,44 @@ hr {
             } 
         }
         return completed;
-    }
+    };
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
-        //alert(JSON.stringify(elementAPI.userData()));
-        /* Checklist */
-        db = elementAPI.userData();
+        if (anyCompleted()) {
+            // display rows of challenges
+            // initiateTable();
+        } else {
+            //alert("No completed challenges...YET!");
+            //Redirect to menu?? That'd be cool
+        }
         
         /* Testing */
         var challenge1 = {title: "Challenge1", content: " 1 content content content", card: "img1", completed: false, group: "DO"};
         var challenge2 = {title: "Challenge2", content: " 2 content content content", card: "img2", completed: false, group: "SAY"};
         var challenge3 = {title: "Challenge3", content: " 3 content content content", card: "img3", completed: false, group: "ACT"};
-        var testArr = [challenge1, challenge2, challenge3];
+        var challenge4 = {title: "Challenge4", content: " 4 content content content", card: "img4", completed: false, group: "GIVE"};
+        var testArr = [challenge1, challenge2, challenge3, challenge4];
         var numberOfItems = testArr.length; // get from getChallengesArray().length
        
-        var challenge;
-        var Id;
-        var Class;
-        var Title;
-        for (var i = 0; i < numberOfItems; i++) {
-            challenge = testArr[i];
-            Id = challenge.title;
-            Class = getClass(challenge.completed);
-            Title = challenge.title;
-            addRow(Id, Class, Title);
-        }
+        /* Checklist */
+        var initiateTable = function () {
+            var challenge;
+            var Id;
+            var Class;
+            var Title;
+            for (var i = 0; i < numberOfItems; i++) {
+                challenge = testArr[i]; //change to getChallengesArray()
+                Id = challenge.title;
+                Class = getClass(challenge.completed);
+                Title = challenge.title;
+                addRow(Id, Class, Title);
+            }
+        };
+        
+        // Just for testing
+        initiateTable();
+        
         
         var check = function (number) {
             var c = "Challenge" + number;
@@ -258,8 +255,9 @@ hr {
         
         for (var i = 0; i <= numberOfItems; i++) {
             var a = "Challenge" + [i];
-            var b = elementAPI.userData().getValue(a);
-            if ( b === "true") {
+            var status = getStatusAtIndex(i);
+            alert(i + " " + status);
+            if (status) {
                 $("#" + a).removeClass("unchecked").addClass("checked");
             };
             check([i]);
@@ -273,16 +271,6 @@ hr {
         }, 500);
         alert(JSON.stringify(elementAPI.metrics()));
     });
-        
-        
-        $(document).ready(function() {
-            if (getCompleted()) {
-                displayCompletedChallenges(getCompleted());
-            } else {
-                alert("No completed challenges...YET!");
-                //Redirect to menu?? That'd be cool
-            }
-        });
           
     </script>
 </body>
