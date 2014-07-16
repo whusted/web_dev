@@ -184,22 +184,11 @@ hr {
         }
     };
     
-    $(document).ready(function() {
-        elementAPI.metrics()['score'].updateValueForMetric(0);
-        if (getChallengesArray()) {
-            // display rows of challenges
-            //initiateTable();
-        } else {
-            alert("You haven't accepted any challenges...YET!");
-        }
-        
-        addRow("Challenge1", "unchecked", "Challenge1", "content content content");
-        addRow("Challenge2", "checked", "Challenge2", "content2 content2 content2");
-       
-        /*Initiate table with new rows, including toggle dropdowns*/
+    /*Initiate table with new rows, including toggle dropdowns*/
         var initiateTable = function () {
+            alert("initiating");
             var challengesArr = getChallengesArray();
-            var numberOfItems = challenges.length;
+            var numberOfItems = challengesArr.length;
             var challenge;
             var Id;
             var Class;
@@ -207,13 +196,32 @@ hr {
             var Content;
             for (var i = 0; i < numberOfItems; i++) {
                 challenge = challengesArr[i];
-                Id = challenge.title;
+                alert(JSON.stringify(challenge));
+                Id = challenge.card.title;
                 Class = getClass(challenge.completed);
-                Title = challenge.title;
-                Content = challenge.content;
+                Title = challenge.card.title;
+                Content = challenge.card.content;
                 addRow(Id, Class, Title, Content);
             }
         };
+    
+    $(document).ready(function() {
+        elementAPI.metrics()['score'].updateValueForMetric(0);
+        if (getChallengesArray()) {
+            var arr = getChallengesArray();
+            for (var i = 0; i < arr.length; i++) {
+                alert(arr[i]);
+            }
+            // display rows of challenges
+            initiateTable();
+        } else {
+            alert("You haven't accepted any challenges...YET!");
+        }
+        
+        //testing
+        
+        //addRow("Challenge1", "unchecked", "Challenge1", "content content content");
+        //addRow("Challenge2", "checked", "Challenge2", "content2 content2 content2");
         
         /* Checklist */
         var check = function (number) {
@@ -230,16 +238,17 @@ hr {
                 }
             });
         };
-        
-//        for (var i = 0; i < 2; i++) { // change back to numberOfItems
-//            var a = "Challenge" + [i];
-//            var status = getStatusAtIndex(i);
-//            alert(i + " " + status);
-//            if (status) {
-//                $("#" + a).removeClass("unchecked").addClass("checked");
-//            };
-//            check([i]);
-//        }
+        if (getChallengesArray()) {
+            for (var i = 0; i < numberOfItems; i++) { // change back to numberOfItems
+                var a = "Challenge" + [i];
+                var status = getStatusAtIndex(i);
+                alert(i + " " + status);
+                if (status) {
+                    $("#" + a).removeClass("unchecked").addClass("checked");
+                };
+                check([i]);
+            }
+        }
     });
     
     $("#table").click(function() {
