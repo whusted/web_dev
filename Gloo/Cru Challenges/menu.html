@@ -191,7 +191,7 @@ hr {
         elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
             // display rows of challenges
-            initiateTable();
+            //initiateTable();
         } else {
             alert("You haven't accepted any challenges...YET!");
         }
@@ -245,8 +245,7 @@ hr {
 //        }
     });
     
-    $("#Challenge1").click(function() {
-        alert("clicked challenge");
+    $("#table").click(function() {
         $(".row").slideToggle(500);
     });
     
