@@ -97,9 +97,8 @@ hr {
     box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
 }
 
-.row {
+.hidden {
    display: none;
-   height: 100px;
 }
 
 </style>
@@ -131,13 +130,11 @@ hr {
     };
     
     var addRow = function (ID, Class, Title, Content) {
-        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
+        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div>' + Title + '<div class="hidden">' + ID + '</div></td>';
         alert("new Row: " + newRow);
         $("#table").find('tbody')
                 .append($('<tr id=' + ID + '></tr>')
                     .append($(newRow)
-                        .append($('<div class="row" id="row1"></div>')
-                        )
                     )
                 );
     };
@@ -246,7 +243,8 @@ hr {
     });
     
     $("#table").click(function() {
-        $(".row").slideToggle(500);
+        var targ = $(event.target);
+        targ.children().slideToggle(500);
     });
     
     $("#take").click(function() {
