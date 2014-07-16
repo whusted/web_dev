@@ -130,10 +130,10 @@ hr {
     };
     
     var addRow = function (ID, Class, Title, Content) {
-        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div>' + Title + '<div class="hidden">' + ID + '</div></td>';
+        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div>' + Title + '<div class="hidden">' + Content + '</div></td>';
         alert("new Row: " + newRow);
         $("#table").find('tbody')
-                .append($('<tr id=' + ID + '></tr>')
+                .append($('<tr id=></tr>')
                     .append($(newRow)
                     )
                 );
@@ -184,34 +184,35 @@ hr {
         }
     };
     
+    var challengesArr = getChallengesArray();
+    var numberOfItems = challengesArr.length;
+    var count = 0;
+    
     /*Initiate table with new rows, including toggle dropdowns*/
         var initiateTable = function () {
-            alert("initiating");
-            var challengesArr = getChallengesArray();
-            var numberOfItems = challengesArr.length;
             var challenge;
-            var Id;
             var Class;
             var Title;
             var Content;
             for (var i = 0; i < numberOfItems; i++) {
                 challenge = challengesArr[i];
                 alert(JSON.stringify(challenge));
-                Id = challenge.card.title;
+                Id =  "Challenge" + count;
                 Class = getClass(challenge.completed);
                 Title = challenge.card.title;
                 Content = challenge.card.content;
                 addRow(Id, Class, Title, Content);
+                count++;
             }
         };
+        
+    $(document).click(function clicker(event) {
+        alert(event.target);
+    });
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
-            var arr = getChallengesArray();
-            for (var i = 0; i < arr.length; i++) {
-                alert(arr[i]);
-            }
             // display rows of challenges
             initiateTable();
         } else {
@@ -225,21 +226,22 @@ hr {
         
         /* Checklist */
         var check = function (number) {
-            var c = "Challenge" + number;
-            $("#" + c).click(function() {
-                var d = elementAPI.userData().getValue(c);
-                //alert(JSON.stringify(d));
+            var n = "Challenge" + number;
+            alert(n);
+            $("#" + n).click(function() {
+                var d = elementAPI.userData().getValue(n);
+                alert(JSON.stringify(d));
                 if ( d === "true" || d === true) {
-                    $("#" + c).removeClass("checked").addClass("unchecked");
-                    db.setValue(c, false);
+                    $("#" + n).removeClass("checked").addClass("unchecked");
+                    db.setValue(n, false);
                 } else {
-                    $("#" + c).removeClass("unchecked").addClass("checked");
-                    db.setValue(c, true);
+                    $("#" + n).removeClass("unchecked").addClass("checked");
+                    db.setValue(n, true);
                 }
             });
         };
         if (getChallengesArray()) {
-            for (var i = 0; i < numberOfItems; i++) { // change back to numberOfItems
+            for (var i = 0; i < numberOfItems; i++) {
                 var a = "Challenge" + [i];
                 var status = getStatusAtIndex(i);
                 alert(i + " " + status);
