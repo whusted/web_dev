@@ -4,15 +4,6 @@
 <link rel="stylesheet" href="gloo_assets_198/JORDANFRAY/ASSETS/STYLESHEETS/normalize.css"/>
 
 <style>
-.menu_buttons {
-    text-align: center;
-    font-size: 25px !important;
-}
-
-.title {
-    text-align: center;
-}
-
 @font-face {
             font-family: "museosans_100";
             src: url("gloo_assets_321/gloo_sass/stylesheets/fonts/museosans_100.ttf");
@@ -106,17 +97,22 @@ hr {
     box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
 }
 
+.row {
+   display: none;
+   height: 100px;
+}
+
 </style>
 <body>
-    <div class="title">
+    <div class="align-center">
         <h2>Menu</h2>
     </div>
     <hr>
       <a class="btn full-width align-center" id="take">Take a Challenge</a>
     <hr>
     
-    <div id="element1">
-        <h2>Accepted Challenges</h2>
+    <div class="align-center">
+        <h2>Challenges</h2>
         <hr>
         <table id="table">
             <tr id="item1">
@@ -138,8 +134,10 @@ hr {
         var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="list-title">' + Title + '</div>';
         alert("new Row: " + newRow);
         $("#table").find('tbody')
-                .append($('<tr id="item5"></tr>') //Check this item5 business
+                .append($('<tr id=' + ID + '></tr>')
                     .append($(newRow)
+                        .append($('<div class="row" id="row1"></div>')
+                        )
                     )
                 );
     };
@@ -197,6 +195,9 @@ hr {
         } else {
             alert("You haven't accepted any challenges...YET!");
         }
+        
+        addRow("Challenge1", "unchecked", "Challenge1", "content content content");
+        addRow("Challenge2", "checked", "Challenge2", "content2 content2 content2");
        
         /*Initiate table with new rows, including toggle dropdowns*/
         var initiateTable = function () {
@@ -233,15 +234,20 @@ hr {
             });
         };
         
-        for (var i = 0; i <= numberOfItems; i++) {
-            var a = "Challenge" + [i];
-            var status = getStatusAtIndex(i);
-            alert(i + " " + status);
-            if (status) {
-                $("#" + a).removeClass("unchecked").addClass("checked");
-            };
-            check([i]);
-        }
+//        for (var i = 0; i < 2; i++) { // change back to numberOfItems
+//            var a = "Challenge" + [i];
+//            var status = getStatusAtIndex(i);
+//            alert(i + " " + status);
+//            if (status) {
+//                $("#" + a).removeClass("unchecked").addClass("checked");
+//            };
+//            check([i]);
+//        }
+    });
+    
+    $("#Challenge1").click(function() {
+        alert("clicked challenge");
+        $(".row").slideToggle(500);
     });
     
     $("#take").click(function() {
