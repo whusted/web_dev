@@ -101,7 +101,11 @@ td {
     height: 50px; 
     width:50px;
     text-align:center; 
-    vertical-align:middle;
+}
+
+.title {
+    animation: none !important;
+    display: block !important;
 }
 
 [id^="Challenge"] {
@@ -125,7 +129,7 @@ td {
         <h2>Challenges</h2>
         <hr>
         <table id="table">
-            <tr id="item1">
+            <tr></tr>
         </table>
     </div>
     
@@ -141,10 +145,10 @@ td {
     };
     
     var addRow = function (ID, Class, Title, Content) {
-        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div>' + Title + '<div class="hidden">' + Content + '</div></td>';
+        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Title + '<div class="hidden">' + Content + '</div></td>';
         alert("new Row: " + newRow);
         $("#table").find('tbody')
-                .append($('<tr id=></tr>')
+                .append($('<tr></tr>')
                     .append($(newRow)
                     )
                 );
@@ -215,6 +219,13 @@ td {
                 count++;
             }
         };
+    
+    function stopAnimation (element) {
+        $(element).css("-webkit-animation", "none");
+        $(element).css("-moz-animation", "none");
+        $(element).css("-ms-animation", "none");
+        $(element).css("animation", "none");
+    }
         
     $(document).click(function clicker(event) {
         //alert(event.target);
@@ -264,7 +275,12 @@ td {
     
     $("#table").click(function() {
         var targ = $(event.target);
-        targ.children().slideToggle(500);
+        var inner = targ.children().context.innerHTML;
+        var isMatch = inner.lastIndexOf("<div", 0) === 0;
+        if (!isMatch) {
+            targ.children().slideToggle(500);
+        }
+        
     });
     
     $("#take").click(function() {
