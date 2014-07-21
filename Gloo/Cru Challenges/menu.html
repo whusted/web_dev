@@ -146,7 +146,6 @@ td {
     
     var addRow = function (ID, Class, Title, Content) {
         var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Title + '<div class="hidden">' + Content + '</div></td>';
-        alert("new Row: " + newRow);
         $("#table").find('tbody')
                 .append($('<tr></tr>')
                     .append($(newRow)
@@ -155,7 +154,7 @@ td {
     };
     
     /*-- Parse and Stringify helper functions --*/
-        
+    
     var db = elementAPI.userData();
     
     var getChallengesArray = function () {
@@ -184,6 +183,7 @@ td {
         return challenge.completed;
     };
     
+    
     /*-- Get array of completed challenges--*/
     
     var anyCompleted = function () {
@@ -201,7 +201,6 @@ td {
     var challengesArr = getChallengesArray();
     var numberOfItems = challengesArr.length;
     var count = 0;
-    
     /*Initiate table with new rows, including toggle dropdowns*/
         var initiateTable = function () {
             var challenge;
@@ -210,7 +209,6 @@ td {
             var Content;
             for (var i = 0; i < numberOfItems; i++) {
                 challenge = challengesArr[i];
-                alert(JSON.stringify(challenge));
                 Id =  "Challenge" + count;
                 Class = getClass(challenge.completed);
                 Title = challenge.card.title;
@@ -219,17 +217,6 @@ td {
                 count++;
             }
         };
-    
-    function stopAnimation (element) {
-        $(element).css("-webkit-animation", "none");
-        $(element).css("-moz-animation", "none");
-        $(element).css("-ms-animation", "none");
-        $(element).css("animation", "none");
-    }
-        
-    $(document).click(function clicker(event) {
-        //alert(event.target);
-    });
     
     $(document).ready(function() {
         elementAPI.metrics()['score'].updateValueForMetric(0);
@@ -249,25 +236,25 @@ td {
         var check = function (number) {
             var n = "Challenge" + number;
             $("#" + n).click(function() {
-                var d = elementAPI.userData().getValue(n);
-                alert(JSON.stringify(d));
-                if ( d === "true" || d === true) {
-                    $("#" + n).removeClass("checked").addClass("unchecked");
-                    db.setValue(n, false);
+                $("#" + n).toggleClass("checked");
+                var updatedChallengesArr = getChallengesArray();
+                var challenge = updatedChallengesArr[number];
+                if (challenge.completed) {
+                    challenge.completed = false;
                 } else {
-                    $("#" + n).removeClass("unchecked").addClass("checked");
-                    db.setValue(n, true);
+                    challenge.completed = true;
                 }
+                db.setValue("acceptedChallenges", JSON.stringify(updatedChallengesArr));
             });
         };
         if (getChallengesArray()) {
             for (var i = 0; i < numberOfItems; i++) {
                 var a = "Challenge" + [i];
+                $("#" + a).addClass("unchecked");
                 var status = getStatusAtIndex(i);
-                alert(i + " " + status);
                 if (status) {
-                    $("#" + a).removeClass("unchecked").addClass("checked");
-                };
+                    $("#" + a).addClass("checked");
+                }
                 check([i]);
             }
         }
