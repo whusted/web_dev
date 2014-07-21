@@ -1,0 +1,83 @@
+<head>
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    
+    <link href="gloo_assets_321/gloo_style/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css">
+    
+    <style>
+    
+    .tilt-right, .throw-right, .center, .tilt-left, .throw-left {
+        -moz-transition: all .4s ease;
+        /* WebKit */
+        -webkit-transition: all .4s ease;
+        /* Opera */
+        -o-transition: all .4s ease;
+        /* Standard */
+        transition: all .4s ease;
+    }
+    
+    .tilt-right {
+        -webkit-transform: translateX(10%) rotate(5deg);
+        -moz-transform: translateX(10%) rotate(5deg);
+        -ms-transform: translateX(10%) rotate(5deg);
+        -o-transform: translateX(10%) rotate(5deg);
+        transform: translateX(10%) rotate(5deg);
+        
+    }
+    
+    .throw-right {
+        -webkit-transform: translateX(125%) rotate(60deg);
+        -moz-transform: translateX(125%) rotate(60deg);
+        -ms-transform: translateX(125%) rotate(60deg);
+        -o-transform: translateX(125%) rotate(60deg);
+        transform: translateX(125%) rotate(60deg);
+    }
+    .center {
+        -webkit-transform: translateX(0px) rotate(0deg);
+        -moz-transform: translateX(0px) rotate(0deg);
+        -ms-transform: translateX(0px) rotate(0deg);
+        -o-transform: translateX(0px) rotate(0deg);
+        transform: translateX(0px) rotate(0deg);
+    }
+    .tilt-left {
+        -webkit-transform: translateX(-10%) rotate(-5deg);
+        -moz-transform: translateX(-10%) rotate(-5deg);
+        -ms-transform: translateX(-10%) rotate(-5deg);
+        -o-transform: translateX(-10%) rotate(-5deg);
+        transform: translateX(-10%) rotate(-5deg);
+    }
+    .throw-left {
+        -webkit-transform: translateX(-150%) rotate(-60deg);
+        -moz-transform: translateX(-150%) rotate(-60deg);
+        -ms-transform: translateX(-150%) rotate(-60deg);
+        -o-transform: translateX(-150%) rotate(-60deg);
+        transform: translateX(-150%) rotate(-60deg);
+    }
+    
+    </style>
+</head>
+<body>
+    <div class="cards">
+        <img id="currentCard"> 
+    </div>
+    
+    <a id="nope" class='btn'>Not Now</a>
+    <a id="yes" class='btn'>Accept</a>
+<script>
+    $("#currentCard").attr({
+        src: "gloo_assets_75/cardsAssets/images/CARD-01_small.png"
+    });
+    
+    $(document).ready(function() {
+        var db = elementAPI.userData();
+        var user = elementAPI.user();
+        
+    });
+    
+    $("#nope").click(function() {
+        $("#currentCard").addClass("throw-left");
+    });
+    $("#yes").click(function() {
+        $("#currentCard").addClass("throw-right");
+    });
+   </script>
+</body>

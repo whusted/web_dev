@@ -97,6 +97,17 @@ hr {
     box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
 }
 
+td {
+    height: 50px; 
+    width:50px;
+    text-align:center; 
+    vertical-align:middle;
+}
+
+[id^="Challenge"] {
+   position: absolute;
+}
+
 .hidden {
    display: none;
 }
@@ -166,7 +177,6 @@ hr {
     var getStatusAtIndex = function (index) {
         var arr = getChallengesArray();
         var challenge = getChallenge(index);
-        alert("LL: " + JSON.stringify(challenge));
         return challenge.completed;
     };
     
@@ -207,7 +217,7 @@ hr {
         };
         
     $(document).click(function clicker(event) {
-        alert(event.target);
+        //alert(event.target);
     });
     
     $(document).ready(function() {
@@ -227,7 +237,6 @@ hr {
         /* Checklist */
         var check = function (number) {
             var n = "Challenge" + number;
-            alert(n);
             $("#" + n).click(function() {
                 var d = elementAPI.userData().getValue(n);
                 alert(JSON.stringify(d));
