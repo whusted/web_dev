@@ -137,9 +137,10 @@ td {
     
      /*--------------- Card object/prototype ------------*/
         
-    var Card = function (title, content, image) {
+    var Card = function (title, content, group, image) {
         this.title = title;
         this.content = content;
+        this.group = group;
         this.image = image;
     };
      
@@ -246,15 +247,16 @@ td {
         } else {
             alert("You haven't accepted any challenges...YET!");
             if (!getUnacceptedChallengesArray()) {
+                alert("First time");
+                alert(db);
                 // First session, initialize array
                 var unacceptedChallenges = [];
                 var cards = [];
                 
-                
-                cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
-                cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "gloo_assets_75/cardsAssets/images/CARD-03_small.png");
-                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
+                cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
+                cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-03_small.png");
+                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
                 // With all cards made, make challenges
                 for (var i = 0; i < cards.length; i++) {
                     var challenge = {card: cards[i], accepted: false, completed: false};
