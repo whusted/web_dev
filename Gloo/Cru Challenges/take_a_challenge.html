@@ -19,25 +19,13 @@
     </div>
     <hr>
         <!-- Below is a dummy div; replace with cards -->
-        <div id="current_card"></div>
+        <img id="current_card" src="">
         <button class="btn" id="not_now">Not Now</button>
         <button class="btn" id="accept">Accept</button>
         <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
         <div id="TheFancybox"></div>
         
    <script> 
-        /*--------------- Card object/prototype ------------*/
-        
-        var Card = function (title, content, image, accepted) {
-            this.title = title;
-            this.content = content;
-            this.image = image;
-            this.accepted = accepted;
-        };
-         
-        Card.prototype.toString = function () {
-            return this.title + ' ' + this.content + ' ' + this.image + ' ' + this.backside;
-        };
         
         /*------------ Helper functions ------------*/
         
@@ -60,7 +48,7 @@
         };
         
         var displayCard = function (currentCard) {
-            $("#current_card").text(currentCard);
+            $("#current_card").attr("src", currentCard);
             return true;
         };
         
@@ -91,6 +79,7 @@
             currentIndex++;
                 if (lastCard(shuffledChallenges, currentIndex)) {
                     currentIndex = 0;
+                    shuffledChallenges = getUnacceptedChallengesArray();
                     shuffleArray(shuffledChallenges);
                     currentChallenge = shuffledChallenges[currentIndex];
                 } else {
@@ -132,7 +121,7 @@
             console.log(elementAPI.userData());
             console.log(elementAPI.userData().getValue("acceptedChallenges"));
             console.log(elementAPI.userData().getValue("unacceptedChallenges"));
-            // Now show next card behind fancybox
+
             currentIndex++;
             currentCard = shuffledChallenges[currentIndex];
             displayCard(currentCard);
