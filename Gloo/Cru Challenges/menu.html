@@ -157,8 +157,8 @@ td {
         }
     };
     
-    var addRow = function (ID, Class, Title, Content) {
-        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Title + '<div class="hidden">' + Content + '</div></td>';
+    var addRow = function (ID, Class, Group, Title, Content) {
+        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Group + ': ' + Title + '<div class="hidden">' + Content + '</div></td>';
         $("#table").find('tbody')
                 .append($('<tr></tr>')
                     .append($(newRow)
@@ -226,15 +226,17 @@ td {
         var initiateTable = function () {
             var challenge;
             var Class;
+            var Group;
             var Title;
             var Content;
             for (var i = 0; i < numberOfItems; i++) {
                 challenge = challengesArr[i];
                 Id =  "Challenge" + count;
                 Class = getClass(challenge.completed);
+                Group = challenge.card.group;
                 Title = challenge.card.title;
                 Content = challenge.card.content;
-                addRow(Id, Class, Title, Content);
+                addRow(Id, Class, Group, Title, Content);
                 count++;
             }
         };
@@ -262,13 +264,11 @@ td {
                     var challenge = {card: cards[i], accepted: false, completed: false};
                     unacceptedChallenges[i] = challenge;
                 }
+                var stringedArr = JSON.stringify(unacceptedChallenges);
+                elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
+                alert(JSON.stringify(elementAPI.userData()));
             }
         }
-        
-        //testing
-        
-        //addRow("Challenge1", "unchecked", "Challenge1", "content content content");
-        //addRow("Challenge2", "checked", "Challenge2", "content2 content2 content2");
         
         /* Checklist */
         var check = function (number) {
