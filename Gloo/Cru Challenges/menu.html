@@ -175,7 +175,9 @@ td {
     var db = elementAPI.userData();
     
     var getChallengesArray = function () {
+        console.log(db.getValue("acceptedChallenges"));
         if (db.getValue("acceptedChallenges")) {
+            console.log("no");
             return JSON.parse(db.getValue("acceptedChallenges"));
         } else {
             return false;
@@ -270,6 +272,7 @@ td {
         };
     
     $(document).ready(function() {
+        console.log(elementAPI.userData());
         elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
             // display rows of challenges
@@ -331,9 +334,10 @@ td {
     $("#reset").click(function() {
         if (confirm("Are you sure you want to reset your challenges?")) {
             initializeNewChallengeDeck();
-            elementAPI.userData().setValue("acceptedChallenges", undefined);
+            elementAPI.userData().setValue("acceptedChallenges", "");
             console.log(elementAPI.userData());
-        }   
+            window.location.reload(false); 
+        }
     });
           
     </script>
