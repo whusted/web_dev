@@ -28,11 +28,11 @@
    <script> 
         /*--------------- Card object/prototype ------------*/
         
-        var Card = function (title, content, image, backside) {
+        var Card = function (title, content, image, accepted) {
             this.title = title;
             this.content = content;
             this.image = image;
-            this.backside = backside;
+            this.accepted = accepted;
         };
          
         Card.prototype.toString = function () {
@@ -40,6 +40,10 @@
         };
         
         /*------------ Helper functions ------------*/
+        
+        var getUnacceptedChallengesArray = function () {
+            return (JSON.parse(elementAPI.userData().getValue("unacceptedChallenges")));
+        };
         
         var shuffleArray = function (array) {
             for (var i = array.length - 1; i > 0; i--) {
@@ -63,33 +67,41 @@
         
         // "Globals"
        var currentIndex = 0;
-       var currentCard; // Not sure if this is going to work in helper functions
-
+       var currentChallenge; // Not sure if this is going to work in helper functions
+       var shuffledChallenges;
+       var unacceptedChallenges;
+       
         $(document).ready(function() {
+            alert(JSON.stringify(elementAPI.userData()));
             // Array of text challenges
-            var CHALLENGES = ["Challenge 1", "Challenge 2", "Challenge 3", "Challenge 4"];
-            var db = elementAPI.userData();
+            unacceptedChallenges = getUnacceptedChallengesArray();
+            shuffledChallenges = shuffleArray(unacceptedChallenges);
             
+            for (var i = 0; i < shuffledChallenges.length; i++) {
+                console.log(shuffledChallenges[i]);
+            }
             // "Top" card
-            currentCard = cards[currentIndex];
-            displayCard(currentCard);
+            currentChallenge = shuffledChallenges[currentIndex];
+            console.log(JSON.stringify(currentChallenge));
+            displayCard(currentChallenge.card.image);
         });
         
         
         $("#not_now").click(function() {
             currentIndex++;
-                if (lastCard(cards, currentIndex)) {
+                if (lastCard(shuffledChallenges, currentIndex)) {
                     currentIndex = 0;
-                    shuffleArray(cards);
-                    currentCard = cards[currentIndex];
+                    shuffleArray(shuffledChallenges);
+                    currentChallenge = shuffledChallenges[currentIndex];
                 } else {
-                    currentCard = cards[currentIndex];
+                    currentChallenge = shuffledChallenges[currentIndex];
                 }
-            displayCard(currentCard);
+            displayCard(currentChallenge.card.image);
         });
             
         $("#accept").click(function() {
-            // Temp(?) behavior -- fancybox pop up
+            currentChallenge.accepted = true;
+            // Temp behavior -- fancybox pop up
             $("#TheFancybox").html("<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p>");
             $(".fancyTrigger").fancybox();
             $(".fancyTrigger").trigger('click');
@@ -104,42 +116,27 @@
                 acceptedChallenges = JSON.parse(elementAPI.userData().getValue("acceptedChallenges"));
             }
             
-            var newChallenge = {card: currentCard, completed: false}; // new challenge object created with card object as first property
+            var newChallenge = currentChallenge;
             acceptedChallenges.unshift(newChallenge); // Adds element to front of array
             var stringedArray = JSON.stringify(acceptedChallenges); // Prepare for databag
+            alert("ready for db: " + stringedArray);
             elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
+            for (var i = 0; i < unacceptedChallenges.length; i++) {
+                if (unacceptedChallenges[i].card.title === newChallenge.card.title) {
+                    unacceptedChallenges.splice(i,1);
+                    break;
+                }
+            }
+            var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
+            elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
+            console.log(elementAPI.userData());
+            console.log(elementAPI.userData().getValue("acceptedChallenges"));
+            console.log(elementAPI.userData().getValue("unacceptedChallenges"));
             // Now show next card behind fancybox
             currentIndex++;
-            currentCard = cards[currentIndex];
+            currentCard = shuffledChallenges[currentIndex];
             displayCard(currentCard);
         });
-        
-        /*------------ Testing ------------*/
-        
-        // Reusable index variable
-        var i;
-        
-        // cards array
-        var cards = [];
-        
-        // Test titles
-        var titles = ["title 1", "title 2", "title 3", "title 4", "title 5", "title 6", "title 7", "title 8", "title 9", "title 10"];
-        
-        //Test content
-        var content = ["content 1","content 2","content 3","content 4","content 5","content 6","content 7","content 8","content 9","content 10"];
-        
-        for (i = 0; i < 10; i++) {
-            cards[i] = new Card(titles[i], content[i]);
-        }
-        
-        // Shuffle test
-        var shuffled = shuffleArray(cards);
-        
-        for (i = 0; i < cards.length; i++) {
-            //alert(cards[i]);
-        }
-        
-        /* ------ End of testing -----*/
         
    </script>
 </body>
