@@ -132,6 +132,10 @@ td {
             <tr></tr>
         </table>
     </div>
+    <div id="reset">
+        
+    </div>
+    
     
     <script>
     
@@ -240,17 +244,8 @@ td {
                 count++;
             }
         };
-    
-    $(document).ready(function() {
-        elementAPI.metrics()['score'].updateValueForMetric(0);
-        if (getChallengesArray()) {
-            // display rows of challenges
-            initiateTable();
-        } else {
-            alert("You haven't accepted any challenges...YET!");
-            if (!getUnacceptedChallengesArray()) {
-                alert("First time");
-                alert(db);
+        
+        var initializeNewChallengeDeck = function() {
                 // First session, initialize array
                 var unacceptedChallenges = [];
                 var cards = [];
@@ -267,6 +262,23 @@ td {
                 var stringedArr = JSON.stringify(unacceptedChallenges);
                 elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
                 alert(JSON.stringify(elementAPI.userData()));
+        
+        };
+        
+        var addReset = function () {
+            $("#reset").append("<a class='btn full-width align-center' id='reset2'>Reset Challenges</a>");
+        };
+    
+    $(document).ready(function() {
+        elementAPI.metrics()['score'].updateValueForMetric(0);
+        if (getChallengesArray()) {
+            // display rows of challenges
+            initiateTable();
+            addReset();
+        } else {
+            alert("You haven't accepted any challenges...YET!");
+            if (!getUnacceptedChallengesArray()) {
+                initializeNewChallengeDeck();
             }
         }
         
@@ -314,6 +326,14 @@ td {
         //Redirect to next element with chromeless
         }, 500);
         alert(JSON.stringify(elementAPI.metrics()));
+    });
+    
+    $("#reset").click(function() {
+        if (confirm("Are you sure you want to reset your challenges?")) {
+            initializeNewChallengeDeck();
+            elementAPI.userData().setValue("acceptedChallenges", undefined);
+            console.log(elementAPI.userData());
+        }   
     });
           
     </script>
