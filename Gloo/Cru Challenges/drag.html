@@ -46,11 +46,11 @@
         transform: translateX(-10%) rotate(-5deg);
     }
     .throw-left {
-        -webkit-transform: translateX(-150%) rotate(-60deg);
-        -moz-transform: translateX(-150%) rotate(-60deg);
-        -ms-transform: translateX(-150%) rotate(-60deg);
-        -o-transform: translateX(-150%) rotate(-60deg);
-        transform: translateX(-150%) rotate(-60deg);
+        -webkit-transform: translateX(-125%) rotate(-60deg);
+        -moz-transform: translateX(-125%) rotate(-60deg);
+        -ms-transform: translateX(-125%) rotate(-60deg);
+        -o-transform: translateX(-125%) rotate(-60deg);
+        transform: translateX(-125%) rotate(-60deg);
     }
     
     </style>
@@ -62,21 +62,30 @@
     
     <a id="nope" class='btn'>Not Now</a>
     <a id="yes" class='btn'>Accept</a>
+    <a id="reset" class='btn'>Reset</a>
 <script>
     $("#currentCard").attr({
-        src: "gloo_assets_75/cardsAssets/images/CARD-01_small.png"
+        src: "gloo_assets_75/cardsAssets/images/CARD-02_small.png"
     });
     
     $(document).ready(function() {
         var db = elementAPI.userData();
         var user = elementAPI.user();
+        
     });
     
     $("#nope").click(function() {
+        $("#currentCard").removeClass("center");
         $("#currentCard").addClass("throw-left");
     });
     $("#yes").click(function() {
+        $("#currentCard").removeClass("center");
         $("#currentCard").addClass("throw-right");
+    });
+    $("#reset").click(function() {
+        $("#currentCard").removeClass("throw-right");
+        $("#currentCard").removeClass("throw-left");
+        $("#currentCard").addClass("center");
     });
    </script>
 </body>
