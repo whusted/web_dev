@@ -1,15 +1,60 @@
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
-<link rel="stylesheet" type="text/css" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css"></link>
 
 <!-- jQuery -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<!--- Fancybox -->
-<script src="http://dev.be-pixel.com/newsletter4/js/jquery.fancybox.pack.js"></script>
 
 <style>
     .title {
         text-align: center;
+    }
+    
+    .tilt-right, .throw-right, .tilt-left, .throw-left {
+        -moz-transition: all .4s ease;
+        /* WebKit */
+        -webkit-transition: all .4s ease;
+        /* Opera */
+        -o-transition: all .4s ease;
+        /* Standard */
+        transition: all .4s ease;
+    }
+    
+    .tilt-right {
+        -webkit-transform: translateX(10%) rotate(5deg);
+        -moz-transform: translateX(10%) rotate(5deg);
+        -ms-transform: translateX(10%) rotate(5deg);
+        -o-transform: translateX(10%) rotate(5deg);
+        transform: translateX(10%) rotate(5deg);
+        
+    }
+    
+    .throw-right {
+        -webkit-transform: translateX(125%) rotate(60deg);
+        -moz-transform: translateX(125%) rotate(60deg);
+        -ms-transform: translateX(125%) rotate(60deg);
+        -o-transform: translateX(125%) rotate(60deg);
+        transform: translateX(125%) rotate(60deg);
+    }
+    .center {
+        -webkit-transform: translateX(0px) rotate(0deg);
+        -moz-transform: translateX(0px) rotate(0deg);
+        -ms-transform: translateX(0px) rotate(0deg);
+        -o-transform: translateX(0px) rotate(0deg);
+        transform: translateX(0px) rotate(0deg);
+    }
+    .tilt-left {
+        -webkit-transform: translateX(-10%) rotate(-5deg);
+        -moz-transform: translateX(-10%) rotate(-5deg);
+        -ms-transform: translateX(-10%) rotate(-5deg);
+        -o-transform: translateX(-10%) rotate(-5deg);
+        transform: translateX(-10%) rotate(-5deg);
+    }
+    .throw-left {
+        -webkit-transform: translateX(-150%) rotate(-60deg);
+        -moz-transform: translateX(-150%) rotate(-60deg);
+        -ms-transform: translateX(-150%) rotate(-60deg);
+        -o-transform: translateX(-150%) rotate(-60deg);
+        transform: translateX(-150%) rotate(-60deg);
     }
     
 </style>
@@ -19,6 +64,7 @@
     </div>
     <hr>
         <!-- Below is a dummy div; replace with cards -->
+        <img id="next_card" src="">
         <img id="current_card" src="">
         <button class="btn" id="not_now">Not Now</button>
         <button class="btn" id="accept">Accept</button>
@@ -43,19 +89,25 @@
             return array;
         };
         
-        var lastCard = function (array, currentIndex) {
+        var isLastCard = function (array, currentIndex) {
             return ((array.length) === currentIndex);
         };
         
-        var displayCard = function (currentCard) {
-            $("#current_card").attr("src", currentCard);
+        var displayNextCard = function (nextChallenge) {
+            $("#next_card").attr("src", nextChallenge);
+            return true;
+        };
+        
+        var displayCard = function (currentChallenge) {
+            $("#current_card").attr("src", currentChallenge);
             return true;
         };
         
         
         // "Globals"
        var currentIndex = 0;
-       var currentChallenge; // Not sure if this is going to work in helper functions
+       var currentChallenge;
+       var nextChallenge;
        var shuffledChallenges;
        var unacceptedChallenges;
        
@@ -70,14 +122,21 @@
             }
             // "Top" card
             currentChallenge = shuffledChallenges[currentIndex];
+            nextChallenge = shuffledChallenges[currentIndex + 1];
             console.log(JSON.stringify(currentChallenge));
+            displayNextCard(nextChallenge.card.image);
             displayCard(currentChallenge.card.image);
         });
         
         
         $("#not_now").click(function() {
+            $("#current_card").addClass("throw-left");
+            $("#current_card").attr("src", nextChallenge);
+            $("#current_card").removeClass("throw-left");
+            $("#current_card").addClass("center");
+            
             currentIndex++;
-                if (lastCard(shuffledChallenges, currentIndex)) {
+                if (isLastCard(shuffledChallenges, currentIndex + 1)) {
                     currentIndex = 0;
                     shuffledChallenges = getUnacceptedChallengesArray();
                     shuffleArray(shuffledChallenges);
@@ -89,12 +148,9 @@
         });
             
         $("#accept").click(function() {
+            $("#currentCard").addClass("throw-right");
             currentChallenge.accepted = true;
-            // Temp behavior -- fancybox pop up
-            $("#TheFancybox").html("<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p>");
-            $(".fancyTrigger").fancybox();
-            $(".fancyTrigger").trigger('click');
-          
+
             // Chromeless nav -- straight to element with more info, or back to menu
             
             // Non chromeless nav -- button highlights and wait for "next" click
@@ -121,10 +177,20 @@
             console.log(elementAPI.userData());
             console.log(elementAPI.userData().getValue("acceptedChallenges"));
             console.log(elementAPI.userData().getValue("unacceptedChallenges"));
-
+            
             currentIndex++;
-            currentCard = shuffledChallenges[currentIndex];
-            displayCard(currentCard);
+            if (isLastCard(shuffledChallenges, currentIndex + 1)) {
+                    currentIndex = 0;
+                    shuffledChallenges = getUnacceptedChallengesArray();
+                    shuffleArray(shuffledChallenges);
+                    currentChallenge = shuffledChallenges[currentIndex];
+                } else {
+                    currentChallenge = shuffledChallenges[currentIndex];
+                }
+            setTimeout(function() {
+                displayCard(currentChallenge.card.image);
+            }, 1000);
+            
         });
         
    </script>
