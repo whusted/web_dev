@@ -90,6 +90,15 @@
             return (JSON.parse(elementAPI.userData().getValue("unacceptedChallenges")));
         };
         
+        var lowOnCards = function(array) {
+            return array.length < 3;
+        };
+        
+        var promptReset = function() {
+            alert("You're running low on new challenges :( Go back to the Menu to complete any unfinished challenges, or reset your challenges to begin again!");
+            //Chromeless nav back to menu
+        };
+        
         var shuffleArray = function (array) {
             for (var i = array.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
@@ -127,13 +136,16 @@
             unacceptedChallenges = getUnacceptedChallengesArray();
             shuffledChallenges = shuffleArray(unacceptedChallenges);
             
-            // "Top" card
-            currentChallenge = shuffledChallenges[currentIndex];
-            nextChallenge = shuffledChallenges[currentIndex + 1];
-            console.log(JSON.stringify(currentChallenge));
-            displayNextCard(nextChallenge.card.image);
-            displayCard(currentChallenge.card.image);
-            console.log("Current card at start: " + currentChallenge.card.title);
+            if (lowOnCards(unacceptedChallenges)) {
+                promptReset();
+            } else {
+                currentChallenge = shuffledChallenges[currentIndex];
+                nextChallenge = shuffledChallenges[currentIndex + 1];
+                console.log(JSON.stringify(currentChallenge));
+                displayNextCard(nextChallenge.card.image);
+                displayCard(currentChallenge.card.image);
+                console.log("Current card at start: " + currentChallenge.card.title);
+            }
         });
         
         
@@ -163,10 +175,11 @@
                 displayNextCard(nextChallenge.card.image);
                 $("#current_card").addClass("center");
                 console.log("Index at end: " + currentIndex);
-            }, 1000);
+            }, 800);
         });
             
         $("#accept").click(function() {
+            $("#current_card").addClass("throw-right");
             console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
             
@@ -189,8 +202,6 @@
             }
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
-            
-            $("#current_card").addClass("throw-right");
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
@@ -215,7 +226,7 @@
                 displayNextCard(nextChallenge.card.image);
                 $("#current_card").addClass("center");
                 console.log("Index at end: " + currentIndex);
-            }, 1000);
+            }, 800);
         });
         
    </script>
