@@ -12,7 +12,7 @@
         /* Opera */
         -o-transition: all .4s ease;
         /* Standard */
-        transition: all .4s ease;
+        transition: all 1.0s ease;
     }
     
     .tilt-right {
@@ -126,20 +126,17 @@
        var unacceptedChallenges;
        
         $(document).ready(function() {
-            alert(JSON.stringify(elementAPI.userData()));
             // Array of text challenges
             unacceptedChallenges = getUnacceptedChallengesArray();
             shuffledChallenges = shuffleArray(unacceptedChallenges);
             
-            for (var i = 0; i < shuffledChallenges.length; i++) {
-                console.log(shuffledChallenges[i]);
-            }
             // "Top" card
             currentChallenge = shuffledChallenges[currentIndex];
             nextChallenge = shuffledChallenges[currentIndex + 1];
             console.log(JSON.stringify(currentChallenge));
             displayNextCard(nextChallenge.card.image);
             displayCard(currentChallenge.card.image);
+            console.log("Current card at start: " + currentChallenge.card.title);
         });
         
         
@@ -151,21 +148,29 @@
                 $("#current_card").removeClass("throw-left");
                 currentIndex++;
                 if (isLastCard(shuffledChallenges, currentIndex + 1)) {
-                    currentIndex = 0;
+                    console.log("Nearing the end of the deck");
+                    currentChallenge = nextChallenge;
+                    currentIndex = -1;
                     shuffledChallenges = getUnacceptedChallengesArray();
                     shuffleArray(shuffledChallenges);
+                    console.log("Current card: " + currentChallenge.card.title);
                     nextChallenge = shuffledChallenges[currentIndex + 1];
+                    console.log("Next Card: " + nextChallenge.card.title);
                 } else {
+                    console.log("Not near the end");
                     currentChallenge = shuffledChallenges[currentIndex];
-                    nextChallenge = shuffledChallenges[currentIndex + 1]
+                    nextChallenge = shuffledChallenges[currentIndex + 1];
+                    console.log("Current card: " + currentChallenge.card.title);
+                    console.log("Next card: " + nextChallenge.card.title);
                 }
                 displayNextCard(nextChallenge.card.image);
                 $("#current_card").addClass("center");
-            }, 400);
+                console.log("Index at end: " + currentIndex);
+            }, 1000);
         });
             
         $("#accept").click(function() {
-            $("#current_card").addClass("throw-right");
+            console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
             
             var acceptedChallenges = [];
@@ -175,7 +180,7 @@
             }
             
             var newChallenge = currentChallenge;
-            alert("ready for db: " + JSON.stringify(newChallenge));
+            console.log("ready for db: " + JSON.stringify(newChallenge));
             acceptedChallenges.unshift(newChallenge); // Adds element to front of array
             var stringedArray = JSON.stringify(acceptedChallenges); // Prepare for databag
             elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
@@ -187,28 +192,33 @@
             }
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
-            console.log(elementAPI.userData());
-            console.log(elementAPI.userData().getValue("acceptedChallenges"));
-            console.log(elementAPI.userData().getValue("unacceptedChallenges"));
             
+            $("#current_card").addClass("throw-right");
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
                 $("#current_card").removeClass("throw-left");
                 currentIndex++;
                 if (isLastCard(shuffledChallenges, currentIndex + 1)) {
-                    currentIndex = 0;
+                    console.log("Nearing the end of the deck");
+                    currentChallenge = nextChallenge;
+                    currentIndex = -1;
                     shuffledChallenges = getUnacceptedChallengesArray();
                     shuffleArray(shuffledChallenges);
+                    console.log("Current card: " + currentChallenge.card.title);
                     nextChallenge = shuffledChallenges[currentIndex + 1];
+                    console.log("Next Card: " + nextChallenge.card.title);
                 } else {
+                    console.log("Not near the end");
                     currentChallenge = shuffledChallenges[currentIndex];
-                    nextChallenge = shuffledChallenges[currentIndex + 1]
+                    nextChallenge = shuffledChallenges[currentIndex + 1];
+                    console.log("Current card: " + currentChallenge.card.title);
+                    console.log("Next card: " + nextChallenge.card.title);
                 }
                 displayNextCard(nextChallenge.card.image);
                 $("#current_card").addClass("center");
-            }, 400);
-            
+                console.log("Index at end: " + currentIndex);
+            }, 1000);
         });
         
    </script>
