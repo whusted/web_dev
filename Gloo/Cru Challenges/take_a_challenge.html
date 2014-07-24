@@ -20,8 +20,7 @@
         -moz-transform: translateX(10%) rotate(5deg);
         -ms-transform: translateX(10%) rotate(5deg);
         -o-transform: translateX(10%) rotate(5deg);
-        transform: translateX(10%) rotate(5deg);
-        
+        transform: translateX(10%) rotate(5deg); 
     }
     
     .throw-right {
@@ -53,6 +52,22 @@
         transform: translateX(-150%) rotate(-60deg);
     }
     
+    .fade {
+        opacity: 0;
+        -webkit-transition: opacity 1s ease-in-out;
+        -moz-transition: opacity 1s ease-in-out;
+        -o-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
+    }
+    
+    .fade-in {
+        opacity: 1.0;
+        -webkit-transition: opacity 0.5s ease-in-out;
+        -moz-transition: opacity 0.5s ease-in-out;
+        -o-transition: opacity 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out;
+    }
+    
     .title {
         text-align: center;
     }
@@ -60,15 +75,32 @@
     .cards {
         position: relative;
     }
-    
     #next_card {
         position: absolute;
         z-index: 1;
     }
     
     #current_card {
-        position: relative;
+        position: absolute;
         z-index: 2;
+    }
+    
+    #accept {
+        position: relative;
+        z-index: 9;
+        top: 0px;
+        left: 0px;
+    }
+    
+    #reject {
+        position: relative;
+        z-index: 10;
+        top: 0px;
+        left: 0px;
+    }
+    
+    .btn {
+        margin-top: 200px;
     }
 </style>
 <body>
@@ -79,9 +111,13 @@
         <div class="cards">
             <img id="next_card" src="">
             <img id="current_card" src="">
+            <div class="stamps">
+                <img class="fade" id="reject" src="gloo_assets_75/cardsAssets/images/button_reject_100.png">
+                <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_100.png">
+            </div>
         </div>
         <button class="btn" id="not_now">Not Now</button>
-        <button class="btn" id="accept">Accept</button>
+        <button class="btn" id="accept2">Accept</button>
    <script> 
         
         /*------------ Helper functions ------------*/
@@ -95,7 +131,7 @@
         };
         
         var promptReset = function() {
-            alert("You're running low on new challenges :( Go back to the Menu to complete any unfinished challenges, or reset your challenges to begin again!");
+            alert("You're running low on new challenges.. Go back to the Menu to complete any unfinished challenges, or reset your challenges to begin again!");
             //Chromeless nav back to menu
         };
         
@@ -151,6 +187,10 @@
         
         $("#not_now").click(function() {
             $("#current_card").addClass("throw-left");
+            $("#reject").addClass("fade-in");
+            setTimeout(function() {
+                $("#reject").removeClass("fade-in");
+            }, 500);
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
@@ -178,8 +218,12 @@
             }, 800);
         });
             
-        $("#accept").click(function() {
+        $("#accept2").click(function() {
             $("#current_card").addClass("throw-right");
+            $("#accept").addClass("fade-in");
+            setTimeout(function() {
+                $("#accept").removeClass("fade-in");
+            }, 500);
             console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
             
@@ -200,6 +244,8 @@
                     break;
                 }
             }
+            // unacceptedChallenges is now one element shorter
+            currentIndex--;
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
             setTimeout(function() {
@@ -212,13 +258,17 @@
                     currentChallenge = nextChallenge;
                     currentIndex = -1;
                     shuffledChallenges = getUnacceptedChallengesArray();
-                    shuffleArray(shuffledChallenges);
-                    console.log("Current card: " + currentChallenge.card.title);
-                    nextChallenge = shuffledChallenges[currentIndex + 1];
-                    console.log("Next Card: " + nextChallenge.card.title);
+                    if (lowOnCards(shuffledChallenges)) {
+                        promptReset();
+                    } else {
+                        shuffleArray(shuffledChallenges);
+                        console.log("Current card: " + currentChallenge.card.title);
+                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                        console.log("Next Card: " + nextChallenge.card.title);
+                    }
                 } else {
                     console.log("Not near the end");
-                    currentChallenge = shuffledChallenges[currentIndex];
+                    currentChallenge = nextChallenge;
                     nextChallenge = shuffledChallenges[currentIndex + 1];
                     console.log("Current card: " + currentChallenge.card.title);
                     console.log("Next card: " + nextChallenge.card.title);
