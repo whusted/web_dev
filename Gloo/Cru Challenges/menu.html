@@ -122,7 +122,7 @@ td {
         <h2>Menu</h2>
     </div>
     <hr>
-      <a class="btn full-width align-center" id="take">Take a Challenge</a>
+      <a class="btn full-width align-center" href="gloo://app/applets/next_applet" id="take">Take a Challenge</a>
     <hr>
     
     <div class="align-center">
@@ -327,9 +327,6 @@ td {
     
     $("#take").click(function() {
         elementAPI.metrics()['score'].updateValueForMetric(1);
-        setTimeout(function() {
-        //"gloo://app/applets/next_applet"; What does this look like?
-        }, 500);
     });
     
     $("#reset").click(function() {
