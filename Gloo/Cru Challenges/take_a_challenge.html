@@ -187,21 +187,19 @@
        var currentIndex = 0;
        var currentChallenge;
        var nextChallenge;
-       var shuffledChallenges;
        var unacceptedChallenges;
        
         $(document).ready(function() {
             // Dev only(?)
             addReset();
             // Array of text challenges
-            unacceptedChallenges = getUnacceptedChallengesArray();
-            shuffledChallenges = shuffleArray(unacceptedChallenges);
+            unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
             
 //            if (lowOnCards(unacceptedChallenges)) {
 //                promptReset();
 //            } else {
-                currentChallenge = shuffledChallenges[currentIndex];
-                nextChallenge = shuffledChallenges[currentIndex + 1];
+                currentChallenge = unacceptedChallenges[currentIndex];
+                nextChallenge = unacceptedChallenges[currentIndex + 1];
                 console.log(JSON.stringify(currentChallenge));
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
@@ -222,28 +220,28 @@
                 $("#current_card").removeClass("throw-right");
                 $("#current_card").removeClass("throw-left");
                 currentIndex++;
-                if (isLastCard(shuffledChallenges, currentIndex + 1)) {
+                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
                     console.log("Nearing the end of the deck");
                     currentChallenge = nextChallenge;
                     currentIndex = -1;
-                    shuffledChallenges = getUnacceptedChallengesArray();
-                    shuffleArray(shuffledChallenges);
+                    unacceptedChallenges = getUnacceptedChallengesArray();
+                    shuffleArray(unacceptedChallenges);
                     console.log("Current card: " + currentChallenge.card.title);
-                    nextChallenge = shuffledChallenges[currentIndex + 1];
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
                     // Check if the current card just came up
                     while (nextChallenge.card.title === currentChallenge.card.title) {
-                        shuffleArray(shuffledChallenges);
-                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
                     console.log("Next Card: " + nextChallenge.card.title);
                 } else {
                     console.log("Not near the end");
-                    currentChallenge = shuffledChallenges[currentIndex];
-                    nextChallenge = shuffledChallenges[currentIndex + 1];
+                    currentChallenge = unacceptedChallenges[currentIndex];
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
                     // Check if the current card just came up
                     while (nextChallenge.card.title === currentChallenge.card.title) {
-                        shuffleArray(shuffledChallenges);
-                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
                     console.log("Current card: " + currentChallenge.card.title);
                     console.log("Next card: " + nextChallenge.card.title);
@@ -285,36 +283,38 @@
             currentIndex--;
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
+            for (var i = 0; i < unacceptedChallenges.length; i++) {
+                console.log(unacceptedChallenges[i]);
+            }
             setTimeout(function() {
+                if (lowOnCards(unacceptedChallenges)) {
+                        promptReset();
+                }
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
                 $("#current_card").removeClass("throw-left");
                 currentIndex++;
-                if (isLastCard(shuffledChallenges, currentIndex + 1)) {
+                console.log("index just bumped to " + currentIndex);
+                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
                     currentChallenge = nextChallenge;
                     currentIndex = -1;
-                    shuffledChallenges = getUnacceptedChallengesArray();
-                    if (lowOnCards(shuffledChallenges)) {
-                        promptReset();
-                    } else {
-                        shuffleArray(shuffledChallenges);
-                        console.log("Current card: " + currentChallenge.card.title);
-                        nextChallenge = shuffledChallenges[currentIndex + 1];
-                        // Check if the current card just came up
-                        while (nextChallenge.card.title === currentChallenge.card.title) {
-                            shuffleArray(shuffledChallenges);
-                            nextChallenge = shuffledChallenges[currentIndex + 1];
-                        }
-                        console.log("Next Card: " + nextChallenge.card.title);
+                    unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
+                    console.log("Current card: " + currentChallenge.card.title);
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
+                    console.log("Next Card: " + nextChallenge.card.title);
                 } else {
                     console.log("Not near the end");
                     currentChallenge = nextChallenge;
-                    nextChallenge = shuffledChallenges[currentIndex + 1];
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
                     // Check if the current card just came up
                     while (nextChallenge.card.title === currentChallenge.card.title) {
-                        shuffleArray(shuffledChallenges);
-                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
                     console.log("Current card: " + currentChallenge.card.title);
                     console.log("Next card: " + nextChallenge.card.title);
