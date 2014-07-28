@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
+<link rel="stylesheet" type="text/css" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css"></link>
 
 <!-- jQuery -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--- Fancybox -->
+<script src="http://dev.be-pixel.com/newsletter4/js/jquery.fancybox.pack.js"></script>
 
 
 <style>
@@ -108,6 +111,9 @@
     <button class="btn" id="not_now">Not Now</button>
     <button class="btn" id="accept2">Accept</button>
     <div id="reset"></div>
+    <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
+    <div id="TheFancybox"></div>
+
     <script> 
        /* Cards */
         var Card = function (title, content, group, image) {
@@ -180,6 +186,10 @@
         
         var addReset = function () {
             $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
+        };
+        
+        var fancyboxContent = function () {
+            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a>";
         };
         
         
@@ -258,6 +268,13 @@
             setTimeout(function() {
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
+                setTimeout(function() {
+                    $("#TheFancybox").html(fancyboxContent());
+                    $(".fancyTrigger").fancybox({
+                        'modal' : true
+                    });
+                    $(".fancyTrigger").trigger('click');
+                }, 500);  
             }, 500);
             console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
@@ -271,7 +288,7 @@
             var newChallenge = currentChallenge;
             console.log("ready for db: " + JSON.stringify(newChallenge));
             acceptedChallenges.unshift(newChallenge); // Adds element to front of array
-            var stringedArray = JSON.stringify(acceptedChallenges); // Prepare for databag
+            var stringedArray = JSON.stringify(acceptedChallenges); // stringify array for databag
             elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
             for (var i = 0; i < unacceptedChallenges.length; i++) {
                 if (unacceptedChallenges[i].card.title === newChallenge.card.title) {
@@ -289,6 +306,7 @@
             setTimeout(function() {
                 if (lowOnCards(unacceptedChallenges)) {
                         promptReset();
+                        // What does this mean? Forced reset? Straight to menu?
                 }
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
