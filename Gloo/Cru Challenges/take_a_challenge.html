@@ -14,7 +14,6 @@
         /* Standard */
         transition: all 1.0s ease;
     }
-    
     .tilt-right {
         -webkit-transform: translateX(10%) rotate(5deg);
         -moz-transform: translateX(10%) rotate(5deg);
@@ -22,7 +21,6 @@
         -o-transform: translateX(10%) rotate(5deg);
         transform: translateX(10%) rotate(5deg); 
     }
-    
     .throw-right {
         -webkit-transform: translateX(125%) rotate(60deg);
         -moz-transform: translateX(125%) rotate(60deg);
@@ -54,18 +52,18 @@
     
     .fade {
         opacity: 0;
-        -webkit-transition: opacity 0.2s ease-in-out;
-        -moz-transition: opacity 0.2s ease-in-out;
-        -o-transition: opacity 0.2s ease-in-out;
-        transition: opacity 0.2s ease-in-out;
+        -webkit-transition: opacity 0.3s ease-in-out;
+        -moz-transition: opacity 0.3s ease-in-out;
+        -o-transition: opacity 0.3s ease-in-out;
+        transition: opacity 0.3s ease-in-out;
     }
     
     .fade-in {
         opacity: 0.8;
-        -webkit-transition: opacity 0.5s ease-in-out;
-        -moz-transition: opacity 0.5s ease-in-out;
-        -o-transition: opacity 0.5s ease-in-out;
-        transition: opacity 0.5s ease-in-out;
+        -webkit-transition: opacity 0.2s ease-in-out;
+        -moz-transition: opacity 0.2s ease-in-out;
+        -o-transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.2s ease-in-out;
     }
     
     .title {
@@ -98,21 +96,30 @@
     }
 </style>
 <body>
-    <div class="title">
-        <h4>Take a Challenge</h4>
-    </div>
-    <hr>
-        <div class="cards">
-            <img id="next_card" src="">
-            <img id="current_card" src="">
-            <div class="stamps">
-                <img class="fade" id="reject" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
-                <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
-            </div>
+
+    <div class="cards">
+        <img id="next_card" src="">
+        <img id="current_card" src="">
+        <div class="stamps">
+            <img class="fade" id="reject" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
+            <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
         </div>
-        <button class="btn" id="not_now">Not Now</button>
-        <button class="btn" id="accept2">Accept</button>
+    </div>
+    <button class="btn" id="not_now">Not Now</button>
+    <button class="btn" id="accept2">Accept</button>
+    <div id="reset"></div>
     <script> 
+       /* Cards */
+        var Card = function (title, content, group, image) {
+            this.title = title;
+            this.content = content;
+            this.group = group;
+            this.image = image;
+        };
+         
+        Card.prototype.toString = function () {
+            return this.title + ' ' + this.content + ' ' + this.image + ' ';
+        };
         
         /*------------ Helper functions ------------*/
         
@@ -120,7 +127,7 @@
             return (JSON.parse(elementAPI.userData().getValue("unacceptedChallenges")));
         };
         
-        var lowOnCards = function(array) {
+        var lowOnCards = function (array) {
             return array.length < 3;
         };
         
@@ -153,6 +160,28 @@
             return true;
         };
         
+        var initializeNewChallengeDeck = function() {
+                // First session, initialize array
+                var unacceptedChallenges = [];
+                var cards = [];
+                
+                cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
+                cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
+                // With all cards made, make challenges
+                for (var i = 0; i < cards.length; i++) {
+                    var challenge = {card: cards[i], accepted: false, completed: false};
+                    unacceptedChallenges[i] = challenge;
+                }
+                var stringedArr = JSON.stringify(unacceptedChallenges);
+                elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
+        };
+        
+        var addReset = function () {
+            $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
+        };
+        
         
         // "Globals"
        var currentIndex = 0;
@@ -162,20 +191,22 @@
        var unacceptedChallenges;
        
         $(document).ready(function() {
+            // Dev only(?)
+            addReset();
             // Array of text challenges
             unacceptedChallenges = getUnacceptedChallengesArray();
             shuffledChallenges = shuffleArray(unacceptedChallenges);
             
-            if (lowOnCards(unacceptedChallenges)) {
-                promptReset();
-            } else {
+//            if (lowOnCards(unacceptedChallenges)) {
+//                promptReset();
+//            } else {
                 currentChallenge = shuffledChallenges[currentIndex];
                 nextChallenge = shuffledChallenges[currentIndex + 1];
                 console.log(JSON.stringify(currentChallenge));
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
                 console.log("Current card at start: " + currentChallenge.card.title);
-            }
+//            }
         });
         
         
@@ -199,11 +230,21 @@
                     shuffleArray(shuffledChallenges);
                     console.log("Current card: " + currentChallenge.card.title);
                     nextChallenge = shuffledChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        shuffleArray(shuffledChallenges);
+                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                    }
                     console.log("Next Card: " + nextChallenge.card.title);
                 } else {
                     console.log("Not near the end");
                     currentChallenge = shuffledChallenges[currentIndex];
                     nextChallenge = shuffledChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        shuffleArray(shuffledChallenges);
+                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                    }
                     console.log("Current card: " + currentChallenge.card.title);
                     console.log("Next card: " + nextChallenge.card.title);
                 }
@@ -250,7 +291,6 @@
                 $("#current_card").removeClass("throw-left");
                 currentIndex++;
                 if (isLastCard(shuffledChallenges, currentIndex + 1)) {
-                    console.log("Nearing the end of the deck");
                     currentChallenge = nextChallenge;
                     currentIndex = -1;
                     shuffledChallenges = getUnacceptedChallengesArray();
@@ -260,12 +300,22 @@
                         shuffleArray(shuffledChallenges);
                         console.log("Current card: " + currentChallenge.card.title);
                         nextChallenge = shuffledChallenges[currentIndex + 1];
+                        // Check if the current card just came up
+                        while (nextChallenge.card.title === currentChallenge.card.title) {
+                            shuffleArray(shuffledChallenges);
+                            nextChallenge = shuffledChallenges[currentIndex + 1];
+                        }
                         console.log("Next Card: " + nextChallenge.card.title);
                     }
                 } else {
                     console.log("Not near the end");
                     currentChallenge = nextChallenge;
                     nextChallenge = shuffledChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        shuffleArray(shuffledChallenges);
+                        nextChallenge = shuffledChallenges[currentIndex + 1];
+                    }
                     console.log("Current card: " + currentChallenge.card.title);
                     console.log("Next card: " + nextChallenge.card.title);
                 }
@@ -273,6 +323,14 @@
                 $("#current_card").addClass("center");
                 console.log("Index at end: " + currentIndex);
             }, 1050);
+        });
+        
+        $("#reset").click(function() {
+            if (confirm("Are you sure you want to reset your challenges?")) {
+                initializeNewChallengeDeck();
+                elementAPI.userData().setValue("acceptedChallenges", "");
+                elementAPI.refresh();
+            }
         });
         
     </script>
