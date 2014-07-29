@@ -229,49 +229,49 @@ td {
     var numberOfItems = challengesArr.length;
     var count = 0;
     /*Initiate table with new rows, including toggle dropdowns*/
-        var initiateTable = function () {
-            var challenge;
-            var Class;
-            var Group;
-            var Title;
-            var Content;
-            for (var i = 0; i < numberOfItems; i++) {
-                challenge = challengesArr[i];
-                Id =  "Challenge" + count;
-                Class = getClass(challenge.completed);
-                Group = challenge.card.group;
-                Title = challenge.card.title;
-                Content = challenge.card.content;
-                addRow(Id, Class, Group, Title, Content);
-                count++;
+    var initiateTable = function () {
+        var challenge;
+        var Class;
+        var Group;
+        var Title;
+        var Content;
+        for (var i = 0; i < numberOfItems; i++) {
+            challenge = challengesArr[i];
+            Id =  "Challenge" + count;
+            Class = getClass(challenge.completed);
+            Group = challenge.card.group;
+            Title = challenge.card.title;
+            Content = challenge.card.content;
+            addRow(Id, Class, Group, Title, Content);
+            count++;
+        }
+    };
+        
+    var initializeNewChallengeDeck = function() {
+            // First session, initialize array
+            var unacceptedChallenges = [];
+            var cards = [];
+            
+            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
+            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
+            // With all cards made, make challenges
+            for (var i = 0; i < cards.length; i++) {
+                var challenge = {card: cards[i], accepted: false, completed: false};
+                unacceptedChallenges[i] = challenge;
             }
-        };
-        
-        var initializeNewChallengeDeck = function() {
-                // First session, initialize array
-                var unacceptedChallenges = [];
-                var cards = [];
-                
-                cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
-                cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
-                // With all cards made, make challenges
-                for (var i = 0; i < cards.length; i++) {
-                    var challenge = {card: cards[i], accepted: false, completed: false};
-                    unacceptedChallenges[i] = challenge;
-                }
-                var stringedArr = JSON.stringify(unacceptedChallenges);
-                elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
-        };
-        
-        var addReset = function () {
-            $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
-        };
-        
-        var addMessage = function () {
-            $("#reset").append("<div>No challenges accepted yet...</div>");
-        };
+            var stringedArr = JSON.stringify(unacceptedChallenges);
+            elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
+    };
+    
+    var addReset = function () {
+        $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
+    };
+    
+    var addMessage = function () {
+        $("#reset").append("<div>No challenges accepted yet...</div>");
+    };
     
     $(document).ready(function() {
         console.log(elementAPI.userData());
