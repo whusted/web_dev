@@ -240,8 +240,8 @@
             $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
         };
         
-        var fancyboxContent = function () {
-            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
+        var fancyboxContent = function (acceptCard) {
+            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <img src=" + acceptCard + "/>" "<a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
         };
         
         
