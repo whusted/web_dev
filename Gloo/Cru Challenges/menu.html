@@ -319,7 +319,9 @@ td {
         var targ = $(event.target);
         var inner = targ.children().context.innerHTML;
         var isMatch = inner.lastIndexOf("<div", 0) === 0;
-        if (!isMatch) {
+        if (!targ.children().context.firstElementChild) {
+            targ.slideToggle(500);
+        } else if (!isMatch) {
             targ.children().slideToggle(500);
         }
         
