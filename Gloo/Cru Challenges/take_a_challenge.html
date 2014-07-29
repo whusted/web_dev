@@ -8,12 +8,12 @@
 
 
 <style>
-    .tilt-right, .throw-right, .tilt-left, .throw-left {
-        -moz-transition: all .4s ease;
+    .tilt-right, .throw-right, .tilt-left, .throw-left, .third, .next {
+        -moz-transition: all 1.0s ease;
         /* WebKit */
-        -webkit-transition: all .4s ease;
+        -webkit-transition: all 1.0s ease;
         /* Opera */
-        -o-transition: all .4s ease;
+        -o-transition: all 1.0s ease;
         /* Standard */
         transition: all 1.0s ease;
     }
@@ -77,15 +77,65 @@
         position: relative;
     }
     
-    #next_card {
+    #fourth {
         position: absolute;
         z-index: 1;
+        padding-top: 10px;
+    }
+    
+    .fourth {
+        z-index: 1;
+        padding-top: 10px;
+      
+    }
+    
+    #third {
+        position: absolute;
+        z-index: 2;
+        padding-top: 10px;
+    }
+    
+    .third {
+        z-index: 2;
+        padding-top: 10px;
+        -webkit-transform: translate(0, -5px);
+        -moz-transform: translate(0, -5px);
+        -ms-transform: translate(0, -5px);
+        -o-transform: translate(0, -5px);
+        transform: translate(0, -5px);
+      
+    }
+    
+    #next_card {
+        position: absolute;
+        z-index: 3;
+        padding-top: 5px;
+    }
+    
+    .next {
+        z-index: 3;
+        padding-top: 5px;
+        -webkit-transform: translate(0, -5px);
+        -moz-transform: translate(0, -5px);
+        -ms-transform: translate(0, -5px);
+        -o-transform: translate(0, -5px);
+        transform: translate(0, -5px);
     }
     
     #current_card {
         position: absolute;
-        z-index: 2;
+        z-index: 4;
     }
+    
+    .current {
+        z-index: 4;
+        -webkit-transform: translate(0, -5px);
+        -moz-transform: translate(0, -5px);
+        -ms-transform: translate(0, -5px);
+        -o-transform: translate(0, -5px);
+        transform: translate(0, -5px);
+    }
+        
     
     #accept, #reject {
         position: absolute;
@@ -101,8 +151,10 @@
 <body>
 
     <div class="cards">
-        <img id="next_card" src="">
-        <img id="current_card" src="">
+        <img class="fourth" id="fourth" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
+        <img class="third" id="third" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
+        <img class="next" id="next_card" src="">
+        <img class="current" id="current_card" src="">
         <div class="stamps">
             <img class="fade" id="reject" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
             <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
@@ -137,7 +189,7 @@
             return array.length < 3;
         };
         
-        var promptReset = function() {
+        var promptReset = function () {
             alert("You're running low on new challenges.. Go back to the Menu to complete any unfinished challenges, or reset your challenges to begin again!");
             //Chromeless nav back to menu
         };
@@ -224,6 +276,10 @@
             setTimeout(function() {
                 $("#reject").removeClass("fade-in");
                 $("#current_card").addClass("throw-left");
+//                $("#third").removeClass("third");
+//                $("#third").addClass("next");
+//                $("#next").removeClass("next");
+//                $("#next").addClass("current");  
             }, 500);
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
