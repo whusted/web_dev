@@ -310,6 +310,10 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
+                    if (lowOnCards(unacceptedChallenges)) {
+                        promptReset();
+                        // What does this mean? Forced reset? Straight to menu?
+                    }
                     $("#TheFancybox").html(fancyboxContent(currentChallenge.card.acceptImage));
                     $(".fancyTrigger").fancybox({
                         'modal' : true
@@ -344,12 +348,6 @@
             for (var i = 0; i < unacceptedChallenges.length; i++) {
                 console.log(unacceptedChallenges[i]);
             }
-            setTimeout(function() {
-                if (lowOnCards(unacceptedChallenges)) {
-                        promptReset();
-                        // What does this mean? Forced reset? Straight to menu?
-                }
-            }, 1000);
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
