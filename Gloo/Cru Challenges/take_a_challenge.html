@@ -1,10 +1,14 @@
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 <link rel="stylesheet" type="text/css" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css"></link>
+<link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/reject_button.css"></link>
+<link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/accept_button.css"></link>
 
 <!-- jQuery -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!--- Fancybox -->
 <script src="http://dev.be-pixel.com/newsletter4/js/jquery.fancybox.pack.js"></script>
+
+<script src="gloo_assets_75/cardsAssets/buttons/js/buttons.js"></script>
 
 
 <style>
@@ -75,6 +79,7 @@
     
     .cards {
         position: relative;
+        margin-left: 5%;
     }
     
     #fourth {
@@ -109,31 +114,11 @@
     #next_card {
         position: absolute;
         z-index: 3;
-        padding-top: 5px;
-    }
-    
-    .next {
-        z-index: 3;
-        padding-top: 5px;
-        -webkit-transform: translate(0, -5px);
-        -moz-transform: translate(0, -5px);
-        -ms-transform: translate(0, -5px);
-        -o-transform: translate(0, -5px);
-        transform: translate(0, -5px);
     }
     
     #current_card {
         position: absolute;
         z-index: 4;
-    }
-    
-    .current {
-        z-index: 4;
-        -webkit-transform: translate(0, -5px);
-        -moz-transform: translate(0, -5px);
-        -ms-transform: translate(0, -5px);
-        -o-transform: translate(0, -5px);
-        transform: translate(0, -5px);
     }
         
     
@@ -144,8 +129,14 @@
         left: 0px;
     }
     
-    .btn {
-        margin-top: 300px;
+    #not_now {
+        margin-top: 320px;
+        margin-left: 10%;
+    }
+    
+    #accept2 {
+        margin-top: 320px;
+        margin-left: 15%;
     }
 </style>
 <body>
@@ -160,23 +151,21 @@
             <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
         </div>
     </div>
-    <button class="btn" id="not_now">Not Now</button>
-    <button class="btn" id="accept2">Accept</button>
+    <a href="#" id="not_now" class="reject-button reject-button-border-highlight reject-button-circle">X</a>
+    <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
+    <br>
     <div id="reset"></div>
     <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
     <div id="TheFancybox"></div>
 
     <script> 
        /* Cards */
-        var Card = function (title, content, group, image) {
+        var Card = function (title, content, group, image, acceptImage) {
             this.title = title;
             this.content = content;
             this.group = group;
             this.image = image;
-        };
-         
-        Card.prototype.toString = function () {
-            return this.title + ' ' + this.content + ' ' + this.image + ' ';
+            this.acceptImage = acceptImage;
         };
         
         /*------------ Helper functions ------------*/
@@ -218,15 +207,15 @@
             return true;
         };
         
-        var initializeNewChallengeDeck = function() {
+        var initializeNewChallengeDeck = function () {
                 // First session, initialize array
                 var unacceptedChallenges = [];
                 var cards = [];
                 
                 cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
                 cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
+                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement.png");
+                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
                 // With all cards made, make challenges
                 for (var i = 0; i < cards.length; i++) {
                     var challenge = {card: cards[i], accepted: false, completed: false};
@@ -241,7 +230,7 @@
         };
         
         var fancyboxContent = function (acceptCard) {
-            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <img src=" + acceptCard + "/>" "<a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
+            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <img src=" + acceptCard + "/> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
         };
         
         
@@ -276,10 +265,6 @@
             setTimeout(function() {
                 $("#reject").removeClass("fade-in");
                 $("#current_card").addClass("throw-left");
-//                $("#third").removeClass("third");
-//                $("#third").addClass("next");
-//                $("#next").removeClass("next");
-//                $("#next").addClass("current");  
             }, 500);
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
@@ -325,7 +310,7 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
-                    $("#TheFancybox").html(fancyboxContent());
+                    $("#TheFancybox").html(fancyboxContent(currentChallenge.card.acceptImage));
                     $(".fancyTrigger").fancybox({
                         'modal' : true
                     });
@@ -364,6 +349,8 @@
                         promptReset();
                         // What does this mean? Forced reset? Straight to menu?
                 }
+            }, 1000);
+            setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
                 $("#current_card").removeClass("throw-left");
