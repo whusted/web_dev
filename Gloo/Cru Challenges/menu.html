@@ -141,15 +141,12 @@ td {
     
      /*--------------- Card object/prototype ------------*/
         
-    var Card = function (title, content, group, image) {
+    var Card = function (title, content, group, image, acceptImage) {
         this.title = title;
         this.content = content;
         this.group = group;
         this.image = image;
-    };
-     
-    Card.prototype.toString = function () {
-        return this.title + ' ' + this.content + ' ' + this.image + ' ';
+        this.acceptImage
     };
     
     // Lame way to get the class
@@ -177,7 +174,6 @@ td {
     var getChallengesArray = function () {
         console.log(db.getValue("acceptedChallenges"));
         if (db.getValue("acceptedChallenges")) {
-            console.log("no");
             return JSON.parse(db.getValue("acceptedChallenges"));
         } else {
             return false;
@@ -247,22 +243,22 @@ td {
         }
     };
         
-    var initializeNewChallengeDeck = function() {
-            // First session, initialize array
-            var unacceptedChallenges = [];
-            var cards = [];
-            
-            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
-            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png");
-            // With all cards made, make challenges
-            for (var i = 0; i < cards.length; i++) {
-                var challenge = {card: cards[i], accepted: false, completed: false};
-                unacceptedChallenges[i] = challenge;
-            }
-            var stringedArr = JSON.stringify(unacceptedChallenges);
-            elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
+    var initializeNewChallengeDeck = function () {
+        // First session, initialize array
+        var unacceptedChallenges = [];
+        var cards = [];
+        
+        cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
+        cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+        cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement.png");
+        cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
+        // With all cards made, make challenges
+        for (var i = 0; i < cards.length; i++) {
+            var challenge = {card: cards[i], accepted: false, completed: false};
+            unacceptedChallenges[i] = challenge;
+        }
+        var stringedArr = JSON.stringify(unacceptedChallenges);
+        elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
     };
     
     var addReset = function () {
@@ -319,7 +315,7 @@ td {
         var targ = $(event.target);
         var inner = targ.children().context.innerHTML;
         var isMatch = inner.lastIndexOf("<div", 0) === 0;
-        if (!targ.children().context.firstElementChild) {
+        if (!targ.children().context.firstElementChild  && targ.children().context.innerHTML) {
             targ.slideToggle(500);
         } else if (!isMatch) {
             targ.children().slideToggle(500);
