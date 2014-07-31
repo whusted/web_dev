@@ -98,17 +98,11 @@
         position: absolute;
         z-index: 2;
         padding-top: 10px;
-    }
-    
-    .third {
-        z-index: 2;
-        padding-top: 10px;
         -webkit-transform: translate(0, -5px);
         -moz-transform: translate(0, -5px);
         -ms-transform: translate(0, -5px);
         -o-transform: translate(0, -5px);
         transform: translate(0, -5px);
-      
     }
     
     #next_card {
@@ -138,12 +132,17 @@
         margin-top: 320px;
         margin-left: 15%;
     }
+    
+    #accepted {
+        width: 100%;
+        height: auto;
+    }
 </style>
 <body>
 
     <div class="cards">
         <img class="fourth" id="fourth" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
-        <img class="third" id="third" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
+        <img id="third" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
         <img class="next" id="next_card" src="">
         <img class="current" id="current_card" src="">
         <div class="stamps">
@@ -208,21 +207,21 @@
         };
         
         var initializeNewChallengeDeck = function () {
-                // First session, initialize array
-                var unacceptedChallenges = [];
-                var cards = [];
-                
-                cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
-                cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-                cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement.png");
-                cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
-                // With all cards made, make challenges
-                for (var i = 0; i < cards.length; i++) {
-                    var challenge = {card: cards[i], accepted: false, completed: false};
-                    unacceptedChallenges[i] = challenge;
-                }
-                var stringedArr = JSON.stringify(unacceptedChallenges);
-                elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
+            // First session, initialize array
+            var unacceptedChallenges = [];
+            var cards = [];
+            
+            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
+            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
+            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement.png");
+            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
+            // With all cards made, make challenges
+            for (var i = 0; i < cards.length; i++) {
+                var challenge = {card: cards[i], accepted: false, completed: false};
+                unacceptedChallenges[i] = challenge;
+            }
+            var stringedArr = JSON.stringify(unacceptedChallenges);
+            elementAPI.userData().setValue("unacceptedChallenges", stringedArr);
         };
         
         var addReset = function () {
@@ -230,7 +229,7 @@
         };
         
         var fancyboxContent = function (acceptCard) {
-            return "<p>Congratulations! This challenge has been added to your 'Current Challenges'.</p> <img src=" + acceptCard + "/> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
+            return "<img id='accepted' src=" + acceptCard + "> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
         };
         
         
@@ -251,10 +250,10 @@
 //            } else {
                 currentChallenge = unacceptedChallenges[currentIndex];
                 nextChallenge = unacceptedChallenges[currentIndex + 1];
-                console.log(JSON.stringify(currentChallenge));
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
-                console.log("Current card at start: " + currentChallenge.card.title);
+                console.log(currentChallenge);
+                console.log(currentChallenge.card.acceptImage);
 //            }
         });
         
@@ -310,13 +309,17 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
-                    if (lowOnCards(unacceptedChallenges)) {
-                        promptReset();
-                        // What does this mean? Forced reset? Straight to menu?
-                    }
-                    $("#TheFancybox").html(fancyboxContent(currentChallenge.card.acceptImage));
+                    $("#TheFancybox").css("background-image", "url(" + currentChallenge.card.acceptImage + ") no-repeat");
+                    $("#TheFancybox").html(fancyboxContent());
                     $(".fancyTrigger").fancybox({
-                        'modal' : true
+                        'modal' : true,
+                        'onClosed' : function() {
+                            console.log("closed");
+                            if (lowOnCards(unacceptedChallenges)) {
+                                promptReset();
+                                // What does this mean? Forced reset? Straight to menu?
+                            }
+                       }
                     });
                     $(".fancyTrigger").trigger('click');
                 }, 500);  
