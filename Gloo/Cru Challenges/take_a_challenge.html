@@ -154,6 +154,7 @@
     <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
     <br>
     <div id="reset"></div>
+    <div class="alert-message">Testing</div>
     <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
     <div id="TheFancybox"></div>
 
@@ -309,6 +310,7 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
+                    
                     $("#TheFancybox").css("background-image", "url(" + currentChallenge.card.acceptImage + ") no-repeat");
                     $("#TheFancybox").html(fancyboxContent());
                     $(".fancyTrigger").fancybox({
