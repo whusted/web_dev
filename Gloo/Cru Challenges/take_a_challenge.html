@@ -1,17 +1,19 @@
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
-<link rel="stylesheet" type="text/css" href="http://fancyapps.com/fancybox/source/jquery.fancybox.css"></link>
 <link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/reject_button.css"></link>
 <link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/accept_button.css"></link>
 
 <!-- jQuery -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<!--- Fancybox -->
-<script src="http://dev.be-pixel.com/newsletter4/js/jquery.fancybox.pack.js"></script>
 
 <script src="gloo_assets_75/cardsAssets/buttons/js/buttons.js"></script>
 
 
 <style>
+
+    .alert-top {
+        z-index: 20;
+    }
+    
     .tilt-right, .throw-right, .tilt-left, .throw-left, .third, .next {
         -moz-transition: all 1.0s ease;
         /* WebKit */
@@ -134,7 +136,9 @@
     }
     
     #accepted {
-        width: 100%;
+        padding-top: -5px;
+        padding-right: 10%;
+        width: 90%;
         height: auto;
     }
 </style>
@@ -154,9 +158,6 @@
     <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
     <br>
     <div id="reset"></div>
-    <div class="alert-message">Testing</div>
-    <a style="text-align: center" class="fancyTrigger" href="#TheFancybox">
-    <div id="TheFancybox"></div>
 
     <script> 
        /* Cards */
@@ -228,11 +229,6 @@
         var addReset = function () {
             $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
         };
-        
-        var fancyboxContent = function (acceptCard) {
-            return "<img id='accepted' src=" + acceptCard + "> <a class='btn' onclick='$.fancybox.close();'>Keep playing</a><a class='btn' onclick='$.fancybox.close();'>To Menu</a>";
-        };
-        
         
         // "Globals"
        var currentIndex = 0;
@@ -310,22 +306,8 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
-                    $("body").append('<div class="alert-top" id="success-msg">Testing testing tester</div>');
-                    $("#success-msg").fadeIn(200);
-                    
-//                    $("#TheFancybox").css("background-image", "url(" + currentChallenge.card.acceptImage + ") no-repeat");
-//                    $("#TheFancybox").html(fancyboxContent());
-//                    $(".fancyTrigger").fancybox({
-//                        'modal' : true,
-//                        'onClosed' : function() {
-//                            console.log("closed");
-//                            if (lowOnCards(unacceptedChallenges)) {
-//                                promptReset();
-//                                // What does this mean? Forced reset? Straight to menu?
-//                            }
-//                       }
-//                    });
-//                    $(".fancyTrigger").trigger('click');
+                    $("body").append("<div class='alert-top' id='success-msg'> <img id='accepted' src=" + currentChallenge.card.acceptImage + " /> </div>");
+                    $("#success-msg").fadeIn(1200);
                 }, 500);  
             }, 500);
             console.log("Current card: " + currentChallenge.card.title);
