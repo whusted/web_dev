@@ -124,12 +124,12 @@
     }
     
     #not_now {
-        margin-top: 320px;
+        margin-top: 310px;
         margin-left: 10%;
     }
     
     #accept2 {
-        margin-top: 320px;
+        margin-top: 310px;
         margin-left: 15%;
     }
     
@@ -310,20 +310,22 @@
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
                 setTimeout(function() {
+                    $("body").append('<div class="alert-top" id="success-msg">Testing testing tester</div>');
+                    $("#success-msg").fadeIn(200);
                     
-                    $("#TheFancybox").css("background-image", "url(" + currentChallenge.card.acceptImage + ") no-repeat");
-                    $("#TheFancybox").html(fancyboxContent());
-                    $(".fancyTrigger").fancybox({
-                        'modal' : true,
-                        'onClosed' : function() {
-                            console.log("closed");
-                            if (lowOnCards(unacceptedChallenges)) {
-                                promptReset();
-                                // What does this mean? Forced reset? Straight to menu?
-                            }
-                       }
-                    });
-                    $(".fancyTrigger").trigger('click');
+//                    $("#TheFancybox").css("background-image", "url(" + currentChallenge.card.acceptImage + ") no-repeat");
+//                    $("#TheFancybox").html(fancyboxContent());
+//                    $(".fancyTrigger").fancybox({
+//                        'modal' : true,
+//                        'onClosed' : function() {
+//                            console.log("closed");
+//                            if (lowOnCards(unacceptedChallenges)) {
+//                                promptReset();
+//                                // What does this mean? Forced reset? Straight to menu?
+//                            }
+//                       }
+//                    });
+//                    $(".fancyTrigger").trigger('click');
                 }, 500);  
             }, 500);
             console.log("Current card: " + currentChallenge.card.title);
