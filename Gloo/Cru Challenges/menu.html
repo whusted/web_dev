@@ -110,6 +110,7 @@ td {
 .title {
     animation: none !important;
     display: block !important;
+    font-size: 0.9em;
 }
 
 [id^="Challenge"] {
@@ -125,26 +126,35 @@ td {
     color: gray;
 }
 
-#accept2 {
+#ready {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+#take {
+    margin-top: 5%;
     margin-left: 30%;
+}
+
+#reset {
+    text-align: center;
+    font-size: 0.7em;
+    color: gray;
 }
 
 </style>
 <body>
-    <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
-    <a class="btn full-width align-center" href="gloo://app/applets/next_applet" id="take">Take a Challenge</a>
+    <div id="ready">I'm ready for a new challenge!</div>
+    <a href="#" id="take" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
     
     <div class="align-center">
-        <h2>Challenges</h2>
+        <br>
         <hr>
         <table id="table">
             <tr></tr>
         </table>
     </div>
-    <div id="reset">
-        
-    </div>
-    
+    <div id="reset"></div>
     
     <script>
     
@@ -275,7 +285,7 @@ td {
     };
     
     var addMessage = function () {
-        $("#reset").append("<div>No challenges accepted yet...</div>");
+        $("#reset").append("<div>NO CHALLENGES ACCEPTED YET...</div>");
     };
     
     $(document).ready(function() {
@@ -333,6 +343,7 @@ td {
     
     $("#take").click(function() {
         elementAPI.metrics()['score'].updateValueForMetric(1);
+        window.location.href = "gloo://app/applets/next_applet";
     });
     
     $("#reset").click(function() {
