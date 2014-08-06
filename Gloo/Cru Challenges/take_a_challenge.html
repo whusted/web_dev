@@ -145,7 +145,6 @@
     }
 </style>
 <body>
-
     <div class="cards">
         <img class="fourth" id="fourth" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
         <img id="third" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
@@ -158,6 +157,10 @@
     </div>
     <a href="#" id="not_now" class="reject-button reject-button-border-highlight reject-button-circle">X</a>
     <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
+    <div class="alert-top" id="success-msg"><img id="accepted" src=""/></div>
+    <br>
+    <br>
+    <br>
     <br>
     <div id="reset"></div>
 
@@ -217,7 +220,7 @@
             
             cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
             cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-02_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement.png");
+            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-03_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement_accept.png");
             cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
             // With all cards made, make challenges
             for (var i = 0; i < cards.length; i++) {
@@ -252,7 +255,6 @@
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
                 console.log(currentChallenge);
-                console.log(currentChallenge.card.acceptImage);
 //            }
         });
         
@@ -304,13 +306,16 @@
         $("#accept2").click(function() {
             $("#accept").addClass("fade-in");
             $("#current_card").removeClass("center");
+            var acceptImage = currentChallenge.card.acceptImage;
             setTimeout(function() {
                 $("#accept").removeClass("fade-in");
                 $("#current_card").addClass("throw-right");
-                setTimeout(function() {
-                    $("body").append("<div class='alert-top' id='success-msg'> <img id='accepted' src=" + currentChallenge.card.acceptImage + " /> </div>");
-                    $("#success-msg").fadeIn(1200);
-                }, 500);  
+                if (acceptImage) {
+                    setTimeout(function() {
+                        $("#accepted").attr("src", acceptImage);
+                        $("#success-msg").fadeIn(900);
+                    }, 500);
+                }
             }, 500);
             console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
@@ -352,7 +357,7 @@
                     console.log("Current card: " + currentChallenge.card.title);
                     nextChallenge = unacceptedChallenges[currentIndex + 1];
                     // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
                         unacceptedChallenges = shuffleArray(unacceptedChallenges);
                         nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
@@ -362,7 +367,7 @@
                     currentChallenge = nextChallenge;
                     nextChallenge = unacceptedChallenges[currentIndex + 1];
                     // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
                         unacceptedChallenges = shuffleArray(unacceptedChallenges);
                         nextChallenge = unacceptedChallenges[currentIndex + 1];
                     }
@@ -380,6 +385,19 @@
                 initializeNewChallengeDeck();
                 elementAPI.userData().setValue("acceptedChallenges", "");
                 elementAPI.refresh();
+            }
+        });
+        
+        $("#accepted").click(function(e) {
+            var pos = $(this).position();
+            //The following are the x/y coordinates of the mouse click relative to image.
+            var x = e.pageX - pos.left;
+            var y = e.pageY - pos.top;
+            if (x > 72 && x < 254 && y > 375 && y < 423) {
+                $("#success-msg").fadeOut(800);
+                setTimeout(function() {
+                    $("#accepted").attr("src", "");
+                }, 850);
             }
         });
         
