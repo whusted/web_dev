@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 <link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/reject_button.css"></link>
 <link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/accept_button.css"></link>
+<script type="text/javascript" src="gloo_assets_321/gloo_style/javascript/helperFunctions.js"></script>
 
 <!-- jQuery -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -120,6 +121,11 @@
         position: absolute;
         z-index: 4;
     }
+    
+    #current_card, #next_card, #third, #fourth {
+        width: 290px;
+        height: 290px;
+    }
         
     
     #accept, #reject {
@@ -129,19 +135,28 @@
         left: 0px;
     }
     
-    #not_now {
-        margin-top: 310px;
-        margin-left: 10%;
+    #not_now3 {
+        float: left;
+        width: 40%;
+        height: 40%;
+        margin-top: 292px;
+        margin-left: 9%;
+        opacity: 0.6;
     }
     
-    #accept2 {
-        margin-top: 310px;
-        margin-left: 15%;
+    #accept3 {
+        float: right;
+        margin-top: -130px;
+        margin-right: 9%;
+        width: 40%;
+        height: 40%;
+        margin-left: 45%;
+        opacity: 0.6;
     }
     
     #accepted {
         width: 100%;
-        height: auto;
+        height: 80%;
     }
 </style>
 <body>
@@ -155,11 +170,9 @@
             <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
         </div>
     </div>
-    <a href="#" id="not_now" class="reject-button reject-button-border-highlight reject-button-circle">X</a>
-    <a href="#" id="accept2" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
+    <img id="not_now3" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
+    <img id="accept3" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
     <div class="alert-top" id="success-msg"><img id="accepted" src=""/></div>
-    <br>
-    <br>
     <br>
     <br>
     <div id="reset"></div>
@@ -186,6 +199,7 @@
         
         var promptReset = function () {
             alert("You're running low on new challenges.. Go back to the Menu to complete any unfinished challenges, or reset your challenges to begin again!");
+            delayedNav();
             //Chromeless nav back to menu
         };
         
@@ -218,10 +232,10 @@
             var unacceptedChallenges = [];
             var cards = [];
             
-            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01_small.png");
-            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02_small.png");
-            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-03_small.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement_accept.png");
-            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04_small.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
+            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01.png");
+            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02.png");
+            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-03.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement_accept.png");
+            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
             // With all cards made, make challenges
             for (var i = 0; i < cards.length; i++) {
                 var challenge = {card: cards[i], accepted: false, completed: false};
@@ -232,7 +246,45 @@
         };
         
         var addReset = function () {
-            $("#reset").append("<a class='btn full-width align-center'>Reset Challenges</a>");
+            $("#reset").append("<a id='reset_btn' class='btn full-width align-center'>Reset Challenges</a>");
+        };
+        
+        var animateButton = function (id) {
+            $(id).animate({
+                duration: "fast",
+                opacity: 1.0
+            });
+            setTimeout(function() {
+                $(id).animate({
+                    duration: "fast",
+                    opacity: 0.6
+                })
+            }, 100);
+        };
+        
+        var throwCardLeft = function () {
+            $("#reject").addClass("fade-in");
+            $("#current_card").removeClass("center");
+            setTimeout(function() {
+                $("#reject").removeClass("fade-in");
+                $("#current_card").addClass("throw-left");
+            }, 500);
+        };
+        
+        var throwCardRight = function () {
+            $("#accept").addClass("fade-in");
+            $("#current_card").removeClass("center");
+            var acceptImage = currentChallenge.card.acceptImage;
+            setTimeout(function() {
+                $("#accept").removeClass("fade-in");
+                $("#current_card").addClass("throw-right");
+                if (acceptImage) {
+                    setTimeout(function() {
+                        $("#accepted").attr("src", acceptImage);
+                        $("#success-msg").fadeIn(900);
+                    }, 500);
+                }
+            }, 500);
         };
         
         // "Globals"
@@ -259,13 +311,9 @@
         });
         
         
-        $("#not_now").click(function() {
-            $("#reject").addClass("fade-in");
-            $("#current_card").removeClass("center");
-            setTimeout(function() {
-                $("#reject").removeClass("fade-in");
-                $("#current_card").addClass("throw-left");
-            }, 500);
+        $("#not_now3").click(function() {
+            animateButton("#not_now3");
+            throwCardLeft();
             setTimeout(function() {
                 $("#current_card").attr("src", nextChallenge.card.image);
                 $("#current_card").removeClass("throw-right");
@@ -303,20 +351,9 @@
             }, 1050);
         });
             
-        $("#accept2").click(function() {
-            $("#accept").addClass("fade-in");
-            $("#current_card").removeClass("center");
-            var acceptImage = currentChallenge.card.acceptImage;
-            setTimeout(function() {
-                $("#accept").removeClass("fade-in");
-                $("#current_card").addClass("throw-right");
-                if (acceptImage) {
-                    setTimeout(function() {
-                        $("#accepted").attr("src", acceptImage);
-                        $("#success-msg").fadeIn(900);
-                    }, 500);
-                }
-            }, 500);
+        $("#accept3").click(function() {
+            animateButton("#accept3");
+            throwCardRight();
             console.log("Current card: " + currentChallenge.card.title);
             currentChallenge.accepted = true;
             
@@ -380,7 +417,7 @@
             }, 1050);
         });
         
-        $("#reset").click(function() {
+        $("#reset").on("click", "#reset_btn", function() {
             if (confirm("Are you sure you want to reset your challenges?")) {
                 initializeNewChallengeDeck();
                 elementAPI.userData().setValue("acceptedChallenges", "");
