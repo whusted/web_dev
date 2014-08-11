@@ -1,7 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="gloo_assets_75/cardsAssets/buttons/js/buttons.js"></script>
 
-
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 <link rel="stylesheet" href="gloo_assets_198/JORDANFRAY/ASSETS/STYLESHEETS/normalize.css"/>
 <link rel="stylesheet" type="text/css" href="gloo_assets_75/cardsAssets/buttons/css/reject_button.css"></link>
@@ -102,21 +101,21 @@ hr {
     box-shadow:         inset 0px 1px 2px 0px rgba(50, 50, 50, 0.6);
 }
 
-td {
-    height: 50px; 
-    width:50px;
-    text-align:center; 
-}
-
 .title {
     animation: none !important;
     display: block !important;
+    float: left;
     font-size: 0.9em;
+    margin-top: -12px;
+    width: 100%;
 }
 
+#checker {
+    width: 20px;
+}   
+
 [id^="Challenge"] {
-    margin-top: -4%;
-    position: absolute;
+    float: top;
 }
 
 .hidden {
@@ -133,9 +132,14 @@ td {
     font-size: 1.2em;
 }
 
-#take {
+.take_ios {
     margin-top: 5%;
     margin-left: 30%;
+}
+
+.take_android {
+    margin-top: 5%;
+    margin-left: 33%;
 }
 
 #reset {
@@ -152,8 +156,7 @@ td {
         <a href="#" id="take" class="accept-button accept-button-border-highlight accept-button-circle">+</a>
     </div>
     <br>
-    
-    <div class="align-center">
+    <div>
         <hr>
         <table id="table">
             <tr></tr>
@@ -183,7 +186,7 @@ td {
     };
     
     var addRow = function (ID, Class, Group, Title, Content) {
-        var newRow = '<td><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Group + ': ' + Title + '<div id="content" class="hidden">' + Content + '</div></td>';
+        var newRow = '<td id="checker"><div id=' + ID + ' class=' + Class +'></td><td><div class="title">' + Group + ': ' + Title + '<div id="content" class="hidden">' + Content + '</div></td>';
         $("#table").find('tbody')
                 .append($('<tr></tr>')
                     .append($(newRow)
@@ -202,7 +205,6 @@ td {
         } else {
             return false;
         }
-        
     };
     
     var getUnacceptedChallengesArray = function () {
@@ -310,6 +312,11 @@ td {
     };
     
     $(document).ready(function() {
+        if (navigator.userAgent.match(/Android/i)) {
+            $("#take").addClass("take_android");
+        } else {
+            $("#take").addClass("take_ios");
+        }
         elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
             // display rows of challenges
@@ -353,6 +360,7 @@ td {
     $("#table").click(function() {
         var targ = $(event.target);
         var inner = targ.children().context.innerHTML;
+        console.log(inner);
         var isMatch = inner.lastIndexOf("<div", 0) === 0;
         if (!targ.children().context.firstElementChild  && targ.children().context.innerHTML) {
             targ.slideToggle(500);
