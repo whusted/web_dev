@@ -86,7 +86,14 @@
     
     .cards {
         position: relative;
-        margin-left: 5%;
+    }
+    
+    .ios {
+        margin-left: 15px;
+    }
+    
+    .android {
+        margin-left: 33px;
     }
     
     #fourth {
@@ -137,8 +144,8 @@
     
     #not_now3 {
         float: left;
-        width: 40%;
-        height: 40%;
+        width: 130px;
+        height: 130px;
         margin-top: 292px;
         margin-left: 9%;
         opacity: 0.6;
@@ -148,21 +155,20 @@
         float: right;
         margin-top: -130px;
         margin-right: 9%;
-        width: 40%;
-        height: 40%;
+        width: 130px;
+        height: 130px;
         margin-left: 45%;
         opacity: 0.6;
     }
     
     #accepted {
         width: 100%;
-        height: 80%;
     }
 </style>
 <body>
     <div class="cards">
-        <img class="fourth" id="fourth" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
-        <img id="third" src="gloo_assets_75/cardsAssets/images/CARD-01_small.png">
+        <img class="fourth" id="fourth" src="">
+        <img id="third" src="">
         <img class="next" id="next_card" src="">
         <img class="current" id="current_card" src="">
         <div class="stamps">
@@ -227,15 +233,37 @@
             return true;
         };
         
+        var displayBottomCards = function () {
+            $("#third").attr("src", "gloo_assets_75/cardsAssets/images/lost_cards.png");
+            $("#fourth").attr("src", "gloo_assets_75/cardsAssets/images/sweet_treat_cards.png"); 
+        };
+        
         var initializeNewChallengeDeck = function () {
             // First session, initialize array
             var unacceptedChallenges = [];
             var cards = [];
             
-            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/CARD-01.png");
-            cards[1] = new Card("Trash Collector", "Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.", "DO", "gloo_assets_75/cardsAssets/images/CARD-02.png");
-            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/CARD-03.png", "gloo_assets_75/cardsAssets/images/note_of_encouragement_accept.png");
-            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/CARD-04.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
+            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/name_game_cards.png", "gloo_assets_75/cardsAssets/images/name_game_cards_accept.png");
+            cards[1] = new Card("Trash Collector","Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.","DO","gloo_assets_75/cardsAssets/images/trash_collector_cards.png","gloo_assets_75/cardsAssets/images/trash_collector_accept.png");
+            cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/note_encouragement_cards.png", "gloo_assets_75/cardsAssets/images/note_encouragement_accept.png");
+            cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/sweet_treat_cards.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
+            cards[4] = new Card("I'm All Ears", "We all want to feel heard. Be intentional to actively listen to those who talk to you today.", "SAY", "gloo_assets_75/cardsAssets/images/ears_cards.png", "gloo_assets_75/cardsAssets/images/ears_accept.png");
+            cards[5] = new Card("Mi Casa, Su Casa", "The meal can be as simple as Kraft Mac N' Cheese. Invite someone over to your place for dinner.", "GIVE", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
+            cards[6] = new Card("Friendly Fast Food", "Here's a quick way to spread some joy. Pay for the meal of the person in line behind you.", "GIVE", "gloo_assets_75/cardsAssets/images/fast_food_cards.png", "gloo_assets_75/cardsAssets/images/fast_food_accept.png");
+            cards[7] = new Card("Just Do It", "What's one chore your roomate/sibling hates the most? Cross that chore off of their to-do list today.", "GIVE", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
+            cards[8] = new Card("Fresh Baked", "There is nothing better than a freshly baked cookie. Whether you make them or get your mom to, bring in some homemade cookies for your classmates.", "DO", "gloo_assets_75/cardsAssets/images/fresh_baked_cards.png", "gloo_assets_75/cardsAssets/images/fresh_baked_accept.png");
+            cards[9] = new Card("I Was Wrong", "We all have to say it from time to time. Admit a mistake you made today or in the past.", "SAY", "gloo_assets_75/cardsAssets/images/i_was_wrong_cards.png", "gloo_assets_75/cardsAssets/images/i_was_wrong_accept.png");
+            cards[10] = new Card("A Literary Inspiration", "Which book has inspired you the most? Highlight or make notes of your favorite lines and leave a copy in the cafeteria. Be sure to leave a note that says, 'Free!' on it.", "GIVE", "gloo_assets_75/cardsAssets/images/literary_inspiration_cards.png", "gloo_assets_75/cardsAssets/images/literary_inspiration_accept.png");
+            cards[11] = new Card("No Service", "Can you hear me now? Keep your phone in your pocket when you're talking with people today.", "DO", "gloo_assets_75/cardsAssets/images/no_service_cards.png", "gloo_assets_75/cardsAssets/images/no_service_accept.png");
+            cards[12] = new Card("Give It Away", "What is collecting dust in your house? Give it away to someone who could actually use it.", "GIVE", "gloo_assets_75/cardsAssets/images/give_it_away_cards.png", "gloo_assets_75/cardsAssets/images/give_it_away_accept.png");
+            cards[13] = new Card("Lost", "College campuses can be very confusing, especially when they are new to you. Keep your eyes out for someone who looks lost and help them find their way.", "GO", "gloo_assets_75/cardsAssets/images/lost_cards.png", "gloo_assets_75/cardsAssets/images/lost_accept.png");
+            cards[14] = new Card("Natural Beauty", "Find a patch of wildflowers or get them from the grocery store. Give them to someone who appreciates nature.", "GO", "gloo_assets_75/cardsAssets/images/natural_beauty_cards.png", "gloo_assets_75/cardsAssets/images/natural_beauty_accept.png");
+            cards[15] = new Card("Thank You", "Use your manners! Write 'Thank You' on a post-it note and leave it for your server the next time you go out for lunch.", "SAY", "gloo_assets_75/cardsAssets/images/thank_you_cards.png", "gloo_assets_75/cardsAssets/images/thank_you_accept.png");
+            cards[16] = new Card("Take it Outside", "Up for a humble favor? Knock on your neighbor's door and ask them if you can take their trash out for them.", "GO", "gloo_assets_75/cardsAssets/images/take_it_outside_cards.png","gloo_assets_75/cardsAssets/images/take_it_outside_accept.png");
+            cards[17] = new Card("Memory Lane", "'Remember that one time...?' Think of a funny memory to cheer up a friend who's feeling down.", "SAY", "gloo_assets_75/cardsAssets/images/memory_lane_cards.png", "gloo_assets_75/cardsAssets/images/memory_lane_accept.png");
+            cards[18] = new Card("Mystery Giver", "What's your favorite place to get a sweet treat? Buy a gift card and leave it in a public place in your office/school with a note that says, 'Enjoy this one on me!'", "GIVE", "gloo_assets_75/cardsAssets/images/mystery_giver_cards.png", "gloo_assets_75/cardsAssets/images/mystery_giver_accept.png");
+            cards[19] = new Card("You First", "We're all in a rush. As you wait in line today at the grocery store or wherever, be intentional about letting others cut in front of you.", "GIVE", "gloo_assets_75/cardsAssets/images/you_first_cards.png", "gloo_assets_75/cardsAssets/images/you_first_accept.png");
+            
             // With all cards made, make challenges
             for (var i = 0; i < cards.length; i++) {
                 var challenge = {card: cards[i], accepted: false, completed: false};
@@ -287,6 +315,27 @@
             }, 500);
         };
         
+        var setiOSButtons = function (x, y) {
+            if (x > 72 && x < 254 && y > 375 && y < 410) {
+                // Keep playing
+                $("#success-msg").fadeOut(800);
+                setTimeout(function() {
+                    $("#accepted").attr("src", "");
+                }, 850);
+            }
+            if (x > 70 && x < 254 && y > 312 && y < 347) {
+                // OK button clicked; return to menu -- doesn't work on android
+                delayedNav();
+            }  
+        };
+        
+        var setForAndroid = function () {
+            $("#success-msg").fadeOut(800);
+            setTimeout(function() {
+                $("#accepted").attr("src", "");
+            }, 850);
+        };
+        
         // "Globals"
        var currentIndex = 0;
        var currentChallenge;
@@ -294,6 +343,11 @@
        var unacceptedChallenges;
        
         $(document).ready(function() {
+            if (navigator.userAgent.match(/Android/i)) {
+                $(".cards").addClass("android");
+            } else {
+                $(".cards").addClass("ios");
+            }
             // Dev only(?)
             addReset();
             // Array of text challenges
@@ -306,7 +360,7 @@
                 nextChallenge = unacceptedChallenges[currentIndex + 1];
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
-                console.log(currentChallenge);
+                displayBottomCards();
 //            }
         });
         
@@ -430,11 +484,10 @@
             //The following are the x/y coordinates of the mouse click relative to image.
             var x = e.pageX - pos.left;
             var y = e.pageY - pos.top;
-            if (x > 72 && x < 254 && y > 375 && y < 423) {
-                $("#success-msg").fadeOut(800);
-                setTimeout(function() {
-                    $("#accepted").attr("src", "");
-                }, 850);
+            if (navigator.userAgent.match(/Android/i)) {
+                setForAndroid();
+            } else {
+                setiOSButtons(x, y);
             }
         });
         
