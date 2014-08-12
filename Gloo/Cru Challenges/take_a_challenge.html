@@ -248,7 +248,7 @@
             cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/note_encouragement_cards.png", "gloo_assets_75/cardsAssets/images/note_encouragement_accept.png");
             cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/sweet_treat_cards.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
             cards[4] = new Card("I'm All Ears", "We all want to feel heard. Be intentional to actively listen to those who talk to you today.", "SAY", "gloo_assets_75/cardsAssets/images/ears_cards.png", "gloo_assets_75/cardsAssets/images/ears_accept.png");
-            cards[5] = new Card("Mi Casa, Su Casa", "The meal can be as simple as Kraft Mac N' Cheese. Invite someone over to your place for dinner.", "GIVE", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
+            cards[5] = new Card("Mi Casa, Su Casa", "The meal can be as simple as Kraft Mac N' Cheese. Invite someone over to your place for dinner.", "GO", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
             cards[6] = new Card("Friendly Fast Food", "Here's a quick way to spread some joy. Pay for the meal of the person in line behind you.", "GIVE", "gloo_assets_75/cardsAssets/images/fast_food_cards.png", "gloo_assets_75/cardsAssets/images/fast_food_accept.png");
             cards[7] = new Card("Just Do It", "What's one chore your roomate/sibling hates the most? Cross that chore off of their to-do list today.", "GIVE", "gloo_assets_75/cardsAssets/images/just_do_it_cards.png", "gloo_assets_75/cardsAssets/images/just_do_it_accept.png");
             cards[8] = new Card("Fresh Baked", "There is nothing better than a freshly baked cookie. Whether you make them or get your mom to, bring in some homemade cookies for your classmates.", "DO", "gloo_assets_75/cardsAssets/images/fresh_baked_cards.png", "gloo_assets_75/cardsAssets/images/fresh_baked_accept.png");
@@ -298,12 +298,14 @@
                 $("#reject").removeClass("fade-in");
                 $("#current_card").addClass("throw-left");
                 _callback();
-            }, 500);
+            }, 400);
         };
         
         var alertCongratulations = function () {
-            
-        }
+            $("#accepted").attr("src", currentChallenge.card.acceptImage);
+            $("#success-msg").fadeIn(900);
+            newCardAfterAccept();
+        };
         
         var updateDatabagArrays = function (_callback) {
             currentChallenge.accepted = true;
@@ -324,7 +326,7 @@
                     break;
                 }
             }
-            // unacceptedChallenges is now one element shorter
+            // unacceptedChallenges is now one element shorter, so bump index down
             currentIndex--;
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             saveArray("unacceptedChallenges", stringedUnaccepted);
@@ -337,13 +339,12 @@
             var acceptImage = currentChallenge.card.acceptImage;
             setTimeout(function() {
                 $("#accept").removeClass("fade-in");
-            }, 500);
+            }, 400);
             setTimeout(function() {
                 $("#current_card").addClass("throw-right");
                 // Save databag arrays before pop up
-                updateDatabagArrays(newCardAfterAccept);
-                
-            }, 750);
+                updateDatabagArrays(alertCongratulations);
+            }, 500);
         };
         
         var newCardAfterReject = function () {
@@ -405,10 +406,6 @@
                 displayNextCard(nextChallenge.card.image);
                 $("#current_card").addClass("center");
             }, 1110);
-            setTimeout(function() {
-                $("#accepted").attr("src", currentChallenge.card.acceptImage);
-                $("#success-msg").fadeIn(900);
-            }, 500);
         };
         
         var setiOSButtons = function (x, y) {
