@@ -142,7 +142,7 @@
         left: 0px;
     }
     
-    #not_now3 {
+    #not_now {
         float: left;
         width: 130px;
         height: 130px;
@@ -176,7 +176,7 @@
             <img class="fade" id="accept" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
         </div>
     </div>
-    <img id="not_now3" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
+    <img id="not_now" src="gloo_assets_75/cardsAssets/images/button_reject_290.png">
     <img id="accept3" src="gloo_assets_75/cardsAssets/images/button_accept_290.png">
     <div class="alert-top" id="success-msg"><img id="accepted" src=""/></div>
     <br>
@@ -243,14 +243,14 @@
             var unacceptedChallenges = [];
             var cards = [];
             
-            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/name_game_cards.png", "gloo_assets_75/cardsAssets/images/name_game_cards_accept.png");
+            cards[0] = new Card("The Name Game", "Pick a business you go into regularly (coffee shop, gym, bookstore, etc.). Learn one of the employee's names and have a simple conversation with them.", "GO", "gloo_assets_75/cardsAssets/images/name_game_cards.png", "gloo_assets_75/cardsAssets/images/name_game_accept.png");
             cards[1] = new Card("Trash Collector","Make the world a cleaner place. Grab a bag (and maybe some gloves) and walk up and down your block. Collect any trash you come across.","DO","gloo_assets_75/cardsAssets/images/trash_collector_cards.png","gloo_assets_75/cardsAssets/images/trash_collector_accept.png");
             cards[2] = new Card("Note of Encouragement", "Who in your life needs a little encouragement? Take a few minutes to send someone a note telling them why they are special to you.", "SAY", "gloo_assets_75/cardsAssets/images/note_encouragement_cards.png", "gloo_assets_75/cardsAssets/images/note_encouragement_accept.png");
             cards[3] = new Card("A Sweet Treat", "Give someone a little pick-me-up. Treat a coworker, classmate, etc. to a cup of coffee.", "GIVE", "gloo_assets_75/cardsAssets/images/sweet_treat_cards.png", "gloo_assets_75/cardsAssets/images/sweet_treat_accept.png");
             cards[4] = new Card("I'm All Ears", "We all want to feel heard. Be intentional to actively listen to those who talk to you today.", "SAY", "gloo_assets_75/cardsAssets/images/ears_cards.png", "gloo_assets_75/cardsAssets/images/ears_accept.png");
             cards[5] = new Card("Mi Casa, Su Casa", "The meal can be as simple as Kraft Mac N' Cheese. Invite someone over to your place for dinner.", "GIVE", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
             cards[6] = new Card("Friendly Fast Food", "Here's a quick way to spread some joy. Pay for the meal of the person in line behind you.", "GIVE", "gloo_assets_75/cardsAssets/images/fast_food_cards.png", "gloo_assets_75/cardsAssets/images/fast_food_accept.png");
-            cards[7] = new Card("Just Do It", "What's one chore your roomate/sibling hates the most? Cross that chore off of their to-do list today.", "GIVE", "gloo_assets_75/cardsAssets/images/casa_cards.png", "gloo_assets_75/cardsAssets/images/casa_accept.png");
+            cards[7] = new Card("Just Do It", "What's one chore your roomate/sibling hates the most? Cross that chore off of their to-do list today.", "GIVE", "gloo_assets_75/cardsAssets/images/just_do_it_cards.png", "gloo_assets_75/cardsAssets/images/just_do_it_accept.png");
             cards[8] = new Card("Fresh Baked", "There is nothing better than a freshly baked cookie. Whether you make them or get your mom to, bring in some homemade cookies for your classmates.", "DO", "gloo_assets_75/cardsAssets/images/fresh_baked_cards.png", "gloo_assets_75/cardsAssets/images/fresh_baked_accept.png");
             cards[9] = new Card("I Was Wrong", "We all have to say it from time to time. Admit a mistake you made today or in the past.", "SAY", "gloo_assets_75/cardsAssets/images/i_was_wrong_cards.png", "gloo_assets_75/cardsAssets/images/i_was_wrong_accept.png");
             cards[10] = new Card("A Literary Inspiration", "Which book has inspired you the most? Highlight or make notes of your favorite lines and leave a copy in the cafeteria. Be sure to leave a note that says, 'Free!' on it.", "GIVE", "gloo_assets_75/cardsAssets/images/literary_inspiration_cards.png", "gloo_assets_75/cardsAssets/images/literary_inspiration_accept.png");
@@ -259,7 +259,7 @@
             cards[13] = new Card("Lost", "College campuses can be very confusing, especially when they are new to you. Keep your eyes out for someone who looks lost and help them find their way.", "GO", "gloo_assets_75/cardsAssets/images/lost_cards.png", "gloo_assets_75/cardsAssets/images/lost_accept.png");
             cards[14] = new Card("Natural Beauty", "Find a patch of wildflowers or get them from the grocery store. Give them to someone who appreciates nature.", "GO", "gloo_assets_75/cardsAssets/images/natural_beauty_cards.png", "gloo_assets_75/cardsAssets/images/natural_beauty_accept.png");
             cards[15] = new Card("Thank You", "Use your manners! Write 'Thank You' on a post-it note and leave it for your server the next time you go out for lunch.", "SAY", "gloo_assets_75/cardsAssets/images/thank_you_cards.png", "gloo_assets_75/cardsAssets/images/thank_you_accept.png");
-            cards[16] = new Card("Take it Outside", "Up for a humble favor? Knock on your neighbor's door and ask them if you can take their trash out for them.", "GO", "gloo_assets_75/cardsAssets/images/take_it_outside_cards.png","gloo_assets_75/cardsAssets/images/take_it_outside_accept.png");
+            cards[16] = new Card("Take It Outside", "Up for a humble favor? Knock on your neighbor's door and ask them if you can take their trash out for them.", "GO", "gloo_assets_75/cardsAssets/images/take_it_outside_cards.png","gloo_assets_75/cardsAssets/images/take_it_outside_accept.png");
             cards[17] = new Card("Memory Lane", "'Remember that one time...?' Think of a funny memory to cheer up a friend who's feeling down.", "SAY", "gloo_assets_75/cardsAssets/images/memory_lane_cards.png", "gloo_assets_75/cardsAssets/images/memory_lane_accept.png");
             cards[18] = new Card("Mystery Giver", "What's your favorite place to get a sweet treat? Buy a gift card and leave it in a public place in your office/school with a note that says, 'Enjoy this one on me!'", "GIVE", "gloo_assets_75/cardsAssets/images/mystery_giver_cards.png", "gloo_assets_75/cardsAssets/images/mystery_giver_accept.png");
             cards[19] = new Card("You First", "We're all in a rush. As you wait in line today at the grocery store or wherever, be intentional about letting others cut in front of you.", "GIVE", "gloo_assets_75/cardsAssets/images/you_first_cards.png", "gloo_assets_75/cardsAssets/images/you_first_accept.png");
@@ -277,7 +277,7 @@
             $("#reset").append("<a id='reset_btn' class='btn full-width align-center'>Reset Challenges</a>");
         };
         
-        var animateButton = function (id) {
+        var animateButton = function (id, _callback, func) {
             $(id).animate({
                 duration: "fast",
                 opacity: 1.0
@@ -286,32 +286,128 @@
                 $(id).animate({
                     duration: "fast",
                     opacity: 0.6
-                })
+                });
+                _callback(func);
             }, 100);
         };
         
-        var throwCardLeft = function () {
+        var throwCardLeft = function (_callback) {
             $("#reject").addClass("fade-in");
             $("#current_card").removeClass("center");
             setTimeout(function() {
                 $("#reject").removeClass("fade-in");
                 $("#current_card").addClass("throw-left");
+                _callback();
             }, 500);
         };
         
-        var throwCardRight = function () {
+        var alertCongratulations = function () {
+            
+        }
+        
+        var updateDatabagArrays = function (_callback) {
+            currentChallenge.accepted = true;
+            var acceptedChallenges = [];
+            // Add to databag -- first check if it's user's first time
+            if (elementAPI.userData().getValue("acceptedChallenges")) {
+                acceptedChallenges = JSON.parse(elementAPI.userData().getValue("acceptedChallenges"));
+            }
+            
+            var newChallenge = currentChallenge;
+            console.log("ready for db: " + JSON.stringify(newChallenge));
+            acceptedChallenges.unshift(newChallenge); // Adds element to front of array
+            var stringedArray = JSON.stringify(acceptedChallenges); // stringify array for databag
+            saveArray("acceptedChallenges", stringedArray); // array into databag
+            for (var i = 0; i < unacceptedChallenges.length; i++) {
+                if (unacceptedChallenges[i].card.title === newChallenge.card.title) {
+                    unacceptedChallenges.splice(i,1);
+                    break;
+                }
+            }
+            // unacceptedChallenges is now one element shorter
+            currentIndex--;
+            var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
+            saveArray("unacceptedChallenges", stringedUnaccepted);
+            _callback();
+        };
+        
+        var throwCardRight = function (_callback) {
             $("#accept").addClass("fade-in");
             $("#current_card").removeClass("center");
             var acceptImage = currentChallenge.card.acceptImage;
             setTimeout(function() {
                 $("#accept").removeClass("fade-in");
+            }, 500);
+            setTimeout(function() {
                 $("#current_card").addClass("throw-right");
-                if (acceptImage) {
-                    setTimeout(function() {
-                        $("#accepted").attr("src", acceptImage);
-                        $("#success-msg").fadeIn(900);
-                    }, 500);
+                // Save databag arrays before pop up
+                updateDatabagArrays(newCardAfterAccept);
+                
+            }, 750);
+        };
+        
+        var newCardAfterReject = function () {
+            setTimeout(function() {
+                $("#current_card").attr("src", nextChallenge.card.image);
+                $("#current_card").removeClass("throw-right");
+                $("#current_card").removeClass("throw-left");
+                currentIndex++;
+                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
+                    currentChallenge = nextChallenge;
+                    currentIndex = -1;
+                    unacceptedChallenges = getUnacceptedChallengesArray();
+                    shuffleArray(unacceptedChallenges);
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    }
+                } else {
+                    currentChallenge = unacceptedChallenges[currentIndex];
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title) {
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    }
                 }
+                displayNextCard(nextChallenge.card.image);
+                $("#current_card").addClass("center");
+            }, 1110);
+        };
+        
+        var newCardAfterAccept = function () {
+            setTimeout(function() {
+                $("#current_card").attr("src", nextChallenge.card.image);
+                $("#current_card").removeClass("throw-right");
+                $("#current_card").removeClass("throw-left");
+                currentIndex++;
+                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
+                    currentChallenge = nextChallenge;
+                    currentIndex = -1;
+                    unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    }
+                } else {
+                    currentChallenge = nextChallenge;
+                    nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    // Check if the current card just came up
+                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
+                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
+                        nextChallenge = unacceptedChallenges[currentIndex + 1];
+                    }
+                }
+                displayNextCard(nextChallenge.card.image);
+                $("#current_card").addClass("center");
+            }, 1110);
+            setTimeout(function() {
+                $("#accepted").attr("src", currentChallenge.card.acceptImage);
+                $("#success-msg").fadeIn(900);
             }, 500);
         };
         
@@ -336,11 +432,16 @@
             }, 850);
         };
         
+        var saveArray = function (key, arr) {
+            return elementAPI.userData().setValue(key, arr);
+        };
+        
         // "Globals"
        var currentIndex = 0;
        var currentChallenge;
        var nextChallenge;
        var unacceptedChallenges;
+       var proceed;
        
         $(document).ready(function() {
             if (navigator.userAgent.match(/Android/i)) {
@@ -353,122 +454,23 @@
             // Array of text challenges
             unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
             
-//            if (lowOnCards(unacceptedChallenges)) {
-//                promptReset();
-//            } else {
+            if (lowOnCards(unacceptedChallenges)) {
+                promptReset();
+            } else {
                 currentChallenge = unacceptedChallenges[currentIndex];
                 nextChallenge = unacceptedChallenges[currentIndex + 1];
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
                 displayBottomCards();
-//            }
+            }
         });
         
-        
-        $("#not_now3").click(function() {
-            animateButton("#not_now3");
-            throwCardLeft();
-            setTimeout(function() {
-                $("#current_card").attr("src", nextChallenge.card.image);
-                $("#current_card").removeClass("throw-right");
-                $("#current_card").removeClass("throw-left");
-                currentIndex++;
-                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
-                    console.log("Nearing the end of the deck");
-                    currentChallenge = nextChallenge;
-                    currentIndex = -1;
-                    unacceptedChallenges = getUnacceptedChallengesArray();
-                    shuffleArray(unacceptedChallenges);
-                    console.log("Current card: " + currentChallenge.card.title);
-                    nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title) {
-                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
-                        nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    }
-                    console.log("Next Card: " + nextChallenge.card.title);
-                } else {
-                    console.log("Not near the end");
-                    currentChallenge = unacceptedChallenges[currentIndex];
-                    nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title) {
-                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
-                        nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    }
-                    console.log("Current card: " + currentChallenge.card.title);
-                    console.log("Next card: " + nextChallenge.card.title);
-                }
-                displayNextCard(nextChallenge.card.image);
-                $("#current_card").addClass("center");
-                console.log("Index at end: " + currentIndex);
-            }, 1050);
+        $("#not_now").click(function() {
+            animateButton("#not_now", throwCardLeft, newCardAfterReject);
         });
             
         $("#accept3").click(function() {
-            animateButton("#accept3");
-            throwCardRight();
-            console.log("Current card: " + currentChallenge.card.title);
-            currentChallenge.accepted = true;
-            
-            var acceptedChallenges = [];
-            // Add to databag -- first check if it's user's first time
-            if (elementAPI.userData().getValue("acceptedChallenges")) {
-                acceptedChallenges = JSON.parse(elementAPI.userData().getValue("acceptedChallenges"));
-            }
-            
-            var newChallenge = currentChallenge;
-            console.log("ready for db: " + JSON.stringify(newChallenge));
-            acceptedChallenges.unshift(newChallenge); // Adds element to front of array
-            var stringedArray = JSON.stringify(acceptedChallenges); // stringify array for databag
-            elementAPI.userData().setValue("acceptedChallenges", stringedArray); // array into databag
-            for (var i = 0; i < unacceptedChallenges.length; i++) {
-                if (unacceptedChallenges[i].card.title === newChallenge.card.title) {
-                    unacceptedChallenges.splice(i,1);
-                    break;
-                }
-            }
-            // unacceptedChallenges is now one element shorter
-            currentIndex--;
-            var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
-            elementAPI.userData().setValue("unacceptedChallenges", stringedUnaccepted);
-            for (var i = 0; i < unacceptedChallenges.length; i++) {
-                console.log(unacceptedChallenges[i]);
-            }
-            setTimeout(function() {
-                $("#current_card").attr("src", nextChallenge.card.image);
-                $("#current_card").removeClass("throw-right");
-                $("#current_card").removeClass("throw-left");
-                currentIndex++;
-                console.log("index just bumped to " + currentIndex);
-                if (isLastCard(unacceptedChallenges, currentIndex + 1)) {
-                    currentChallenge = nextChallenge;
-                    currentIndex = -1;
-                    unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
-                    console.log("Current card: " + currentChallenge.card.title);
-                    nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
-                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
-                        nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    }
-                    console.log("Next Card: " + nextChallenge.card.title);
-                } else {
-                    console.log("Not near the end");
-                    currentChallenge = nextChallenge;
-                    nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    // Check if the current card just came up
-                    while (nextChallenge.card.title === currentChallenge.card.title && unacceptedChallenges.length !== 1) {
-                        unacceptedChallenges = shuffleArray(unacceptedChallenges);
-                        nextChallenge = unacceptedChallenges[currentIndex + 1];
-                    }
-                    console.log("Current card: " + currentChallenge.card.title);
-                    console.log("Next card: " + nextChallenge.card.title);
-                }
-                displayNextCard(nextChallenge.card.image);
-                $("#current_card").addClass("center");
-                console.log("Index at end: " + currentIndex);
-            }, 1050);
+            animateButton("#accept3", throwCardRight, newCardAfterAccept);
         });
         
         $("#reset").on("click", "#reset_btn", function() {
@@ -490,6 +492,5 @@
                 setiOSButtons(x, y);
             }
         });
-        
     </script>
 </body>
