@@ -265,7 +265,7 @@
             cards[19] = new Card("You First", "We're all in a rush. As you wait in line today at the grocery store or wherever, be intentional about letting others cut in front of you.", "GIVE", "gloo_assets_75/cardsAssets/images/you_first_cards.png", "gloo_assets_75/cardsAssets/images/you_first_accept.png");
             
             // With all cards made, make challenges
-            for (var i = 0; i < cards.length; i++) {
+            for (var i = 0; i < 3; i++) {
                 var challenge = {card: cards[i], accepted: false, completed: false};
                 unacceptedChallenges[i] = challenge;
             }
@@ -302,13 +302,15 @@
         };
         
         var alertCongratulations = function () {
-            $("#accepted").attr("src", currentChallenge.card.acceptImage);
+            $("#accepted").attr("src", currentAcceptImage);
             $("#success-msg").fadeIn(900);
             newCardAfterAccept();
         };
         
         var updateDatabagArrays = function (_callback) {
             currentChallenge.accepted = true;
+            currentAcceptImage = currentChallenge.card.acceptImage;
+            
             var acceptedChallenges = [];
             // Add to databag -- first check if it's user's first time
             if (elementAPI.userData().getValue("acceptedChallenges")) {
@@ -316,6 +318,9 @@
             }
             
             var newChallenge = currentChallenge;
+            // Shed weight of images before putting in databag
+            newChallenge.card.image = "";
+            newChallenge.card.acceptImage = "";
             console.log("ready for db: " + JSON.stringify(newChallenge));
             acceptedChallenges.unshift(newChallenge); // Adds element to front of array
             var stringedArray = JSON.stringify(acceptedChallenges); // stringify array for databag
@@ -330,6 +335,7 @@
             currentIndex--;
             var stringedUnaccepted = JSON.stringify(unacceptedChallenges);
             saveArray("unacceptedChallenges", stringedUnaccepted);
+            //alert(elementAPI.userData().getValue("acceptedChallenges"));
             _callback();
         };
         
@@ -438,7 +444,7 @@
        var currentChallenge;
        var nextChallenge;
        var unacceptedChallenges;
-       var proceed;
+       var currentAcceptImage;
        
         $(document).ready(function() {
             if (navigator.userAgent.match(/Android/i)) {
@@ -451,18 +457,19 @@
             // Array of text challenges
             unacceptedChallenges = shuffleArray(getUnacceptedChallengesArray());
             
-            if (lowOnCards(unacceptedChallenges)) {
-                promptReset();
-            } else {
+//            if (lowOnCards(unacceptedChallenges)) {
+//                promptReset();
+//            } else {
                 currentChallenge = unacceptedChallenges[currentIndex];
                 nextChallenge = unacceptedChallenges[currentIndex + 1];
                 displayNextCard(nextChallenge.card.image);
                 displayCard(currentChallenge.card.image);
                 displayBottomCards();
-            }
+//            }
         });
         
         $("#not_now").click(function() {
+            //alert(elementAPI.userData().getValue("acceptedChallenges"));
             animateButton("#not_now", throwCardLeft, newCardAfterReject);
         });
             
@@ -479,6 +486,7 @@
         });
         
         $("#accepted").click(function(e) {
+            //alert(elementAPI.userData().getValue("acceptedChallenges"));
             var pos = $(this).position();
             //The following are the x/y coordinates of the mouse click relative to image.
             var x = e.pageX - pos.left;
