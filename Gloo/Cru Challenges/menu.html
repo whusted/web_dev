@@ -1,6 +1,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="gloo_assets_75/cardsAssets/buttons/js/buttons.js"></script>
-<script type="text/javascript" src="gloo_assets_321/gloo_style/javascript/helperFunctions.js"></script>
 
 <link rel="stylesheet" href="gloo_assets_321/gloo_style/stylesheets/style.css"/>
 <link rel="stylesheet" href="gloo_assets_198/JORDANFRAY/ASSETS/STYLESHEETS/normalize.css"/>
@@ -60,6 +59,11 @@ hr {
     background-color: #bdbdbd;
     border: none;
     margin: 0 0 15px 0;
+}
+
+.btn {
+    background: #f12d58;
+    border: #f12d58;
 }
 
 .list-title {
@@ -138,7 +142,7 @@ hr {
 
 #checklist_header {
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.4em;
 }
 
 #ready {
@@ -159,7 +163,7 @@ hr {
 
 #reset {
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.95em;
     color: gray;
 }
 
@@ -170,6 +174,7 @@ hr {
     <div id="bottom">
         <div id="checklist_header">My Challenge Checklist</div>
         <br>
+        <hr>
         <table id="table">
             <tr></tr>
         </table>
@@ -307,7 +312,7 @@ hr {
         cards[18] = new Card("Mystery Giver", "What's your favorite place to get a sweet treat? Buy a gift card and leave it in a public place in your office/school with a note that says, 'Enjoy this one on me!'", "GIVE", "gloo_assets_75/cardsAssets/images/mystery_giver_cards.png", "gloo_assets_75/cardsAssets/images/mystery_giver_accept.png");
         cards[19] = new Card("You First", "We're all in a rush. As you wait in line today at the grocery store or wherever, be intentional about letting others cut in front of you.", "GIVE", "gloo_assets_75/cardsAssets/images/you_first_cards.png", "gloo_assets_75/cardsAssets/images/you_first_accept.png");
         // With all cards made, make challenges
-        for (var i = 0; i < 4; i++) {
+        for (var i = 0; i < cards.length; i++) {
             var challenge = {card: cards[i], accepted: false, completed: false};
             unacceptedChallenges[i] = challenge;
         }
@@ -324,8 +329,6 @@ hr {
     };
     
     $(document).ready(function() {
-        alert(elementAPI.userData().getValue("unacceptedChallenges"));
-        alert(elementAPI.userData().getValue("acceptedChallenges"));
         if (navigator.userAgent.match(/Android/i)) {
             $("#take").addClass("take_android");
             $("#checklist_header").addClass("android_header");
@@ -333,12 +336,11 @@ hr {
             $("#top").prepend('<div id="ready">I&#39;m ready for a new challenge!</div><a href="#" id="take" class="accept-button accept-button-border-highlight accept-button-circle">+</a><br><br><hr>');
             $("#take").addClass("take_ios");
         }
-        elementAPI.metrics()['score'].updateValueForMetric(0);
         if (getChallengesArray()) {
-            // display rows of challenges
             initiateTable();
             addReset();
         } else {
+            $("#table").remove(); //empty table takes up space if not removed
             addMessage();
             if (!getUnacceptedChallengesArray()) {
                 initializeNewChallengeDeck();
@@ -387,9 +389,7 @@ hr {
     });
     
     $("body").on("click", "#take", function() {
-        console.log('click');
-        elementAPI.metrics()['score'].updateValueForMetric(1);
-        delayedNav();
+        window.location.href = "gloo://app/applets/next_applet";
     });
     
     $("#reset").click(function() {
